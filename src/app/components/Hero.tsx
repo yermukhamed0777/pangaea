@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowDownRight, Asterisk, Check, X } from "lucide-react";
+import Link from "next/link";
 
 const rise = {
   hidden: { opacity: 0, y: 28 },
@@ -31,7 +32,7 @@ function AnalysisSheet() {
             <Asterisk size={16} strokeWidth={2.5} />
             <span className="font-mono text-[10px] uppercase tracking-[0.2em]">verification sheet</span>
           </div>
-          <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">no. 04821</span>
+          <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">demo · synthetic</span>
         </div>
 
         {/* score block */}
@@ -143,9 +144,9 @@ export default function Hero() {
             animate="show"
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <a href="#access" className="btn-solid">
-              Get early access <ArrowDownRight size={16} />
-            </a>
+            <Link href="/workbench" className="btn-solid">
+              Open workbench <ArrowDownRight size={16} />
+            </Link>
             <a href="#method" className="btn-outline">
               See the method
             </a>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const links = [
   { label: "The problem", href: "#problem" },
@@ -49,9 +50,9 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#access" className="hidden sm:inline-flex btn-solid !px-5 !py-3">
-            Request access
-          </a>
+          <Link href="/workbench" className="hidden sm:inline-flex btn-solid !px-5 !py-3">
+            Open workbench
+          </Link>
           <button
             aria-label="Toggle menu"
             onClick={() => setOpen(!open)}

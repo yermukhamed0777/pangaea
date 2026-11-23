@@ -1,2 +1,2 @@
-:HL["/pangaea/_next/static/chunks/2patna_4m22_t.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"3HYUKhkPEOTfqpeabUQiS"}
+:HL["/pangaea/_next/static/chunks/2b33rgg21h4f1.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"7Xu1zPoFLGoWZVg2nTxV9"}

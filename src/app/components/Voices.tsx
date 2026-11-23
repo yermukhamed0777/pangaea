@@ -29,7 +29,7 @@ export default function Voices() {
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-acid">05 / From testers</p>
             <h2 className="mt-4 font-serif text-[46px] leading-none sm:text-[60px]">People who read the receipts.</h2>
           </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-paper/40">unedited · private beta</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-paper/40">sample tester feedback</span>
         </div>
 
         <div className="mt-14 grid gap-px bg-paper/20 md:grid-cols-3">

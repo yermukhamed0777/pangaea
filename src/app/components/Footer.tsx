@@ -28,7 +28,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
-          <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">© 2026 PANGAEA — private beta</span>
+          <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">© 2026 PANGAEA — open tools</span>
           <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">Built for the skeptical</span>
         </div>
       </div>
