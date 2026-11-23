@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #f4f2ec;
+  --ink: #111110;
+  --acid: #c6f24e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+/* Editorial helpers */
+.container-edge {
+  @apply mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12;
+}
+
+.eyebrow {
+  @apply font-mono text-[11px] uppercase tracking-[0.22em] text-muted;
+}
+
+.rule {
+  @apply border-t border-line;
+}
+
+.mark {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.mark::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 0.06em;
+  height: 0.28em;
+  background: var(--acid);
+  z-index: -1;
+}
+
+.grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(17, 17, 16, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 17, 16, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  @apply font-mono text-[13px] uppercase tracking-[0.18em] px-10 py-4 whitespace-nowrap;
+}
+
+.btn-solid {
+  @apply inline-flex items-center gap-3 bg-ink text-paper px-7 py-4 font-mono text-[12px] uppercase tracking-[0.14em] transition-colors hover:bg-acid hover:text-ink;
+}
+
+.btn-outline {
+  @apply inline-flex items-center gap-3 border border-ink px-7 py-4 font-mono text-[12px] uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-paper;
+}
+
+.field {
+  @apply w-full bg-transparent border-b-2 border-ink py-4 text-[18px] outline-none placeholder:text-muted/60 focus:border-coral;
+}

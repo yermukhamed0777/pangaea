@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/pangaea/_next/static/chunks/158myu8e_yme3.js"],"ViewportBoundary"]
+3:I[97367,["/pangaea/_next/static/chunks/158myu8e_yme3.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/pangaea/_next/static/chunks/158myu8e_yme3.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"PANGAEA — Know what you're buying"}],["$","meta","1",{"name":"description","content":"PANGAEA reads real buyer feedback, exposes manipulated ratings, and finds the same product for less. Shopping intelligence with nothing to hide."}],["$","meta","2",{"name":"keywords","content":"review analysis,fake review detection,price comparison,shopping intelligence,PANGAEA"}],["$","link","3",{"rel":"icon","href":"/favicon.svg"}],["$","$L5","4",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"3HYUKhkPEOTfqpeabUQiS"}
