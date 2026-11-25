@@ -1,10 +1,11 @@
 # PANGAEA — strategy
 
-Status snapshot (2026-11-25): **stage = prototype / pre-validation**. Local build and
-verification pass; the previously published Pages site was reachable (HTTP 200) but
-still serves the pre-change build. Measured benchmark: **8,240.58 ms** median for
-5,000 reviews / 20 runs (O(n²) duplicate scan). Tests: **12/12 pass**. Next action:
-push the verified commit and confirm CI, then close P0-6.
+Status snapshot (2026-11-25): **stage = prototype / pre-validation, published and CI-verified**.
+Local and remote HEAD are both `ad5a773b762baeb27791923db0d069502c703d56`; CI run
+`45626579139` and Pages run `45626579090` both succeeded; the live page serves the
+relabelled copy (HTTP 200, length 51358). Measured benchmark: **8,240.58 ms** median for
+5,000 reviews / 20 runs (O(n²) duplicate scan); committed CI benchmark is 2,000/10 at
+1,260.35 ms. Tests: **12/12 pass**. Next action: P0-6 — remove the O(n²) duplicate scan.
 
 ## Market and thesis
 
@@ -96,3 +97,4 @@ a future network-sniffing test).
 |---|---|---|---|---|
 | S1 | 2026-11-25 | Phase 1 read-only audit: read `package.json`, `README.md`, `PANGAEA-RECOVERY.md`, all `src/lib/*`, `src/app/**`, CI configs; `Get-ChildItem`, `git status`, `node --version`, `gh auth status`, `gh repo view`, `npm.cmd run build`, `npm.cmd run test`, `npm.cmd run lint`, `Invoke-WebRequest` to Pages URL | `npm.cmd run build` | Build passed; 3 static routes. `test`/`lint` scripts missing (npm error). Repo `yermukhamed0777/pangaea` is PUBLIC. Live URL HTTP 200. |
 | S2 | 2026-11-25 | Phase 2/3 implementation: verification harness, engine wording fix, claim reconciliation, scrubbed recovery notes, restored research brief, public-repo scaffolding, CI, and `plan/` | `npm.cmd run verify` | typecheck clean, 12/12 tests pass, benchmark and build pass; see `plan/progress.md` for exact numbers. |
+| S3 | 2026-11-25 | Phase 5 push: untracked generated `out/`, committed `ad5a773`, pushed to existing public repo, closed P0-2/P0-10 in the plan | `git ls-remote`, `gh run watch 45626579139`, `gh run watch 45626579090`, `Invoke-WebRequest` | remote HEAD equals local; CI success in 39 s; Pages success; live page relabelled. |

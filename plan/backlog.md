@@ -19,10 +19,12 @@ append-only decisions in `plan/decisions.md`.
   `tests/cost.test.ts`. Added 12 tests with Node's built-in runner; no new dependency.
   **Done when:** `npm test` reports 12/12 pass. Verified 2026-11-25.
 
-- [ ] **P0-2 — Confirm CI on the pushed commit.** Refs: `.github/workflows/ci.yml`,
-  `.github/workflows/deploy.yml:21-26`. Local chain passes; remote run not yet observed.
+- [x] **P0-2 — Confirm CI on the pushed commit.** Refs: `.github/workflows/ci.yml`,
+  `.github/workflows/deploy.yml:21-26`. Verified: local and remote HEAD both
+  `ad5a773b762baeb27791923db0d069502c703d56`; `gh run watch 45626579139 --exit-status`
+  → success in 39 s; deploy run `45626579090` → success.
   **Done when:** CI run for the pushed SHA is green and both SHAs are recorded in
-  `plan/progress.md`.
+  `plan/progress.md`. Verified 2026-11-25.
 
 - [x] **P0-3 — Fix misleading timing observation.** Ref: `src/lib/engine.ts:106`.
   "7-day window ending" became "within 7 days of" because the window is centred on
@@ -60,10 +62,12 @@ append-only decisions in `plan/decisions.md`.
   **Done when:** either displayed with a precise non-verdict label or removed; decision
   appended to `plan/decisions.md`.
 
-- [ ] **P0-10 — Re-verify the published page after push.** Ref: `.github/workflows/deploy.yml`.
-  The live URL returned HTTP 200 on 2026-11-25 but served the pre-change build.
+- [x] **P0-10 — Re-verify the published page after push.** Ref: `.github/workflows/deploy.yml`.
+  After deploy run `45626579090`, a fresh Pages request returned HTTP 200, length 51358,
+  with `Illustrative mockup` 1, `Illustrative verdict` 1, `Composite example` 3,
+  `Three passes. Evidence` 1, and `Do not buy` / `M. Artyomova` 0 matches.
   **Done when:** a fresh Pages request contains the illustrative labels and no old
-  testimonial names.
+  testimonial names. Verified 2026-11-25.
 
 ## P1 — next
 

@@ -79,3 +79,33 @@ locations; O(n²) duplicate scan.
 
 **Open items mapped:** P0-2, P0-6, P0-7, P0-8, P0-9, P0-10, P1-1, P1-2, M1-1 … M1-4,
 M2-1 … M2-3, M3-1, M3-2. P0-1, P0-3, P0-4 and P0-5 are complete and checked in the backlog.
+
+## 2026-11-25 — S3: Phase 5 push and CI verification
+
+**Changed:** `plan/backlog.md` (P0-2 and P0-10 ticked with evidence), this progress
+entry, and `plan/strategy.md` (status snapshot and session table). No source code changed.
+
+**Commands and results (exact):**
+- `git init -b main`; `git remote add origin https://github.com/yermukhamed0777/pangaea.git`;
+  `git fetch origin main` → new remote branch at `375e6c089b60fe60812fb0aa28f35259f4f96651`.
+- `git reset --mixed origin/main` → preserved the working tree and exposed that the
+  remote tracked 50+ generated `out/` files.
+- `git rm -r --cached out`; `git add -A`; `git commit -m "Add verification harness,
+  reconcile public claims, and create plan folder"` → `ad5a773b762baeb27791923db0d069502c703d56`,
+  88 files changed, 3074 insertions, 421 deletions.
+- `git push origin main` → `375e6c0..ad5a773 main -> main`.
+  `git ls-remote origin refs/heads/main` and `git rev-parse HEAD` both returned
+  `ad5a773b762baeb27791923db0d069502c703d56`.
+- `gh run list --repo yermukhamed0777/pangaea --limit 5 --json ...` → Verify PANGAEA
+  run `45626579139` in progress, Pages run `45626579090` queued, both for HEAD `ad5a773`.
+- `gh run watch 45626579139 --exit-status --interval 10` → exit 0, `verify in 39s`,
+  all steps green (install locked dependencies, tests/typecheck, benchmark, static build).
+  Annotation only: GitHub Actions forces Node-20-targeted checkout/setup-node actions to
+  run on Node 24; no failure.
+- `gh run watch 45626579090 --exit-status` → already completed with `success`.
+- `Invoke-WebRequest https://yermukhamed0777.github.io/pangaea/` → status 200,
+  length 51358; `Illustrative mockup` 1, `Illustrative verdict` 1, `Composite example`
+  3, `Three passes. Evidence` 1, `Do not buy` 0, `M. Artyomova` 0.
+
+**Open items mapped:** P0-6, P0-7, P0-8, P0-9, P1-1, P1-2, M1-1 … M1-4, M2-1 … M2-3,
+M3-1, M3-2. P0-2 and P0-10 are now closed. Next action: P0-6 (remove the O(n²) scan).
