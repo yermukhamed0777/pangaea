@@ -103,7 +103,7 @@ export function analyze(reviews: Review[]): Analysis {
       signals.push({
         key: "timing-burst", label: "Review timing is uneven", family: "timing",
         severity: ratio >= 4 ? "strong" : "notable", confidence: round(Math.min(0.95, ratio / 6)),
-        observed: `${peak.n} reviews fall in a 7-day window ending ${peak.start}; about ${round(expected, 1)} would be expected if reviews were evenly spread across the ${round(span)} days.`,
+        observed: `${peak.n} reviews fall within 7 days of ${peak.start}; about ${round(expected, 1)} would be expected if reviews were evenly spread across the ${round(span)} days.`,
         benign: "A launch, restock, sale, or a popular video can genuinely produce a real spike of reviews.",
         concern: "Coordinated review campaigns also produce bursts that are dense and tightly packed.",
         evidenceIds: peak.ids.slice(0, 8),

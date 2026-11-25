@@ -34,7 +34,7 @@ const features = [
   {
     tag: "Integrity",
     title: "Manipulation, exposed",
-    text: "Burst timing, copy-paste phrases, and suspicious account history — surfaced with the evidence attached.",
+    text: "Burst timing, copy-paste phrases, and repeated author names — surfaced with the evidence attached.",
     visual: (
       <div className="flex h-[76px] items-end gap-1">
         {[12, 14, 11, 16, 13, 15, 88, 92, 84, 95, 78, 14, 12, 10, 16].map((h, i) => (
@@ -78,11 +78,11 @@ const features = [
       <div className="space-y-2 font-mono text-[10px]">
         <div className="flex items-center gap-2 border border-ink p-2">
           <span className="bg-acid px-1.5 py-0.5 text-[9px]">SOURCE</span>
-          <span className="truncate">review #884 · 14 Mar</span>
+          <span className="truncate">review ID · evidence list</span>
         </div>
         <div className="flex items-center gap-2 border border-ink p-2">
           <span className="bg-acid px-1.5 py-0.5 text-[9px]">SOURCE</span>
-          <span className="truncate">listing · shop B</span>
+          <span className="truncate">offer · landed-cost row</span>
         </div>
       </div>
     ),

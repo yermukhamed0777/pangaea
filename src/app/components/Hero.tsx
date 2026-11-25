@@ -32,21 +32,21 @@ function AnalysisSheet() {
             <Asterisk size={16} strokeWidth={2.5} />
             <span className="font-mono text-[10px] uppercase tracking-[0.2em]">verification sheet</span>
           </div>
-          <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">demo · synthetic</span>
+          <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">illustrative mockup · synthetic</span>
         </div>
 
         {/* score block */}
         <div className="grid grid-cols-[auto_1fr] gap-5 border-b-2 border-ink px-5 py-5">
           <div className="flex flex-col items-center justify-center border-r-2 border-line pr-5">
             <span className="font-serif text-[76px] leading-[0.85]">38</span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted mt-1">trust index</span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted mt-1">illustrative score</span>
           </div>
           <div className="flex flex-col justify-center">
             <p className="font-serif text-[22px] leading-tight">
               “Derma Calm SPF 50 Sun Fluid”
             </p>
             <div className="mt-3 inline-flex w-fit items-center gap-2 bg-coral px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-paper">
-              <X size={11} strokeWidth={3} /> Do not buy
+              <X size={11} strokeWidth={3} /> Illustrative verdict · not engine output
             </div>
             <p className="mt-2 font-mono text-[10px] text-muted">1,204 reviews · 4 shops · 6 signals</p>
           </div>
@@ -92,8 +92,11 @@ function AnalysisSheet() {
         className="absolute -right-8 -top-6 hidden sm:flex items-center gap-2 border-2 border-ink bg-paper px-3 py-2 shadow-[4px_4px_0_#111110]"
       >
         <span className="h-2 w-2 rounded-full bg-coral animate-pulse" />
-        <span className="font-mono text-[9px] uppercase tracking-[0.14em]">3 fake bursts found</span>
+        <span className="font-mono text-[9px] uppercase tracking-[0.14em]">3 timing clusters (illustrative)</span>
       </motion.div>
+      <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.12em] text-muted">
+        Illustrative mockup — the workbench reports observations, never verdicts.
+      </p>
     </motion.div>
   );
 }
@@ -159,7 +162,7 @@ export default function Hero() {
             animate="show"
             className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-6"
           >
-            {["No sponsored results", "Works on 5 marketplaces", "Private by default"].map((t) => (
+            {["No sponsored results", "Paste reviews from any shop", "Private by default"].map((t) => (
               <span key={t} className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
                 ↳ {t}
               </span>
@@ -178,12 +181,12 @@ export default function Hero() {
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0">
               {[
-                "Sentiment mapping",
-                "Burst detection",
-                "Seller verification",
-                "Cross-shop matching",
-                "Price history",
-                "Bundle math",
+                "Timing bursts",
+                "Duplicate text",
+                "Rating skew",
+                "Author concentration",
+                "Verification gaps",
+                "Landed cost",
               ].map((t) => (
                 <span key={`${dup}-${t}`} className="ticker-item flex items-center gap-6">
                   {t} <Asterisk size={13} />

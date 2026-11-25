@@ -9,21 +9,21 @@ const steps = [
     n: "I",
     title: "Read everything",
     body: "We parse every written review, not the average. Recurring praise, repeated complaints, and the words people actually use.",
-    footnote: "1,204 reviews → 14 real themes",
+    footnote: "1,204 reviews → 14 real themes (illustrative)",
   },
   {
     icon: Fingerprint,
     n: "II",
     title: "Find the fingerprints",
     body: "Timing clusters, duplicated sentences, thin accounts, and rating jumps. Patterns that look human until you line them up.",
-    footnote: "312 reviews in 19 minutes → flagged",
+    footnote: "312 reviews in 19 minutes → flagged (illustrative)",
   },
   {
     icon: Scale,
     n: "III",
     title: "Weigh the real cost",
     body: "Match the identical item across shops, add shipping and duty, then show what you'd actually pay today.",
-    footnote: "Same formula → 68% less elsewhere",
+    footnote: "Same formula → 68% less elsewhere (illustrative)",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function Method() {
       <div className="flex flex-wrap items-end justify-between gap-6 border-b-2 border-ink pb-6">
         <div>
           <p className="eyebrow">02 / Method</p>
-          <h2 className="mt-4 font-serif text-[46px] leading-none sm:text-[64px]">Three passes. One verdict.</h2>
+          <h2 className="mt-4 font-serif text-[46px] leading-none sm:text-[64px]">Three passes. Evidence, not verdicts.</h2>
         </div>
         <p className="max-w-sm text-[14px] leading-relaxed text-muted">
           No black box. Every conclusion in a PANGAEA sheet links back to the review or

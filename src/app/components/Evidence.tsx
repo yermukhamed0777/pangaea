@@ -3,16 +3,16 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "2.4M", label: "Reviews parsed", note: "and counting" },
-  { value: "11k", label: "Listings checked", note: "across five shops" },
-  { value: "38%", label: "Flagged as noisy", note: "bursts, copies, padding" },
-  { value: "4.1×", label: "Average saving", note: "on matched items" },
+  { value: "2.4M", label: "Reviews parsed", note: "illustrative · not measured" },
+  { value: "11k", label: "Listings checked", note: "illustrative · not measured" },
+  { value: "38%", label: "Flagged as noisy", note: "illustrative · not measured" },
+  { value: "20", label: "Synthetic demo reviews", note: "src/lib/sample.ts" },
 ];
 
 export default function Evidence() {
   return (
     <section id="evidence" className="container-edge py-24 sm:py-28">
-      <p className="eyebrow">04 / Evidence</p>
+      <p className="eyebrow">04 / Illustrative prototype figures</p>
       <h2 className="mt-4 max-w-3xl font-serif text-[46px] leading-[1.02] sm:text-[62px]">
         Small team. Unreasonable amount of reading.
       </h2>
