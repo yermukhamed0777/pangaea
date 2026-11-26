@@ -2,8 +2,8 @@
 
 Date: 2026-11-26. Status: **frozen** — no product features added after this
 validation pass. The reviewed prior state was `129f4ed` (final audit) with
-deployment evidence at `42a2a00` (CI and gated Pages run IDs). This document
-records the validation layer added on top of that state.
+deployment evidence at `42a2a00` (CI and gated Pages run IDs). The validation
+layer is commit `959ec73`; this documentation-only amendment records its SHA.
 
 ## What is frozen
 

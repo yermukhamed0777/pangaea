@@ -350,4 +350,5 @@ No engine or UI behaviour changed; no product feature was added.
 
 **Open items mapped:** F-01…F-04 are Done; M1-1, M1-2 and M3-2 remain human-only.
 The product is frozen; the canonical URL and alternative deployment are
-recorded in `docs/RELEASE.md`.
+recorded in `docs/RELEASE.md`. Validation commit: `959ec73`. This
+documentation-only amendment uses `[skip ci]` to avoid a redundant deploy.
