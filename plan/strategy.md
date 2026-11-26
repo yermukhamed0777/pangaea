@@ -1,11 +1,10 @@
 # PANGAEA — strategy
 
-Status snapshot (2026-11-25): **stage = prototype / pre-validation, published and CI-verified**.
-Local and remote HEAD are both `ad5a773b762baeb27791923db0d069502c703d56`; CI run
-`45626579139` and Pages run `45626579090` both succeeded; the live page serves the
-relabelled copy (HTTP 200, length 51358). Measured benchmark: **8,240.58 ms** median for
-5,000 reviews / 20 runs (O(n²) duplicate scan); committed CI benchmark is 2,000/10 at
-1,260.35 ms. Tests: **12/12 pass**. Next action: P0-6 — remove the O(n²) duplicate scan.
+Status snapshot (2026-11-26): **stage = prototype / pre-validation, published and CI-verified**.
+Last pushed HEAD was `75cc131` (CI/deploy verified 2026-11-25); local work since then is
+unpushed. The duplicate scan no longer dominates: measured benchmark is **649.97 ms**
+median for 5,000 reviews / 20 runs (was 8,240.58 ms), so the P0-6 target is met.
+Tests: **16/16 pass**. Next action: P1-1 — CSV/JSON import.
 
 ## Market and thesis
 
@@ -51,13 +50,13 @@ Measured now (commands and results are in `plan/progress.md`):
 
 | Metric | Value | Source |
 |---|---|---|
-| Tests passing | 12/12 | `npm test` |
+| Tests passing | 16/16 | `npm test` |
 | Typecheck | clean | `npm run typecheck` |
 | Static routes | `/`, `/workbench`, `/_not-found` | `npm run build` |
 | Demo signals fired | 6 of 7 possible | `analyze(demoReviews())` |
-| Demo average / adjusted | 4.4 / 4.31 | `analyze(demoReviews())` |
-| Engine benchmark | 8,240.58 ms median, 5,000 reviews, 20 runs | `scripts/bench.ts` |
-| Published site | HTTP 200 | `Invoke-WebRequest` to Pages URL |
+| Demo average / adjusted | 4.4 / 4.18 (9 excluded IDs) | `analyze(demoReviews())` |
+| Engine benchmark | 649.97 ms median, 5,000 reviews, 20 runs | `scripts/bench.ts` |
+| Published site | HTTP 200 (as of 2026-11-25) | `Invoke-WebRequest` to Pages URL |
 
 Proposed targets (**not measured — decisions, not facts**): p95 under 2 s for 1,000
 reviews; at least 10 consenting user sessions before publishing any real number;
@@ -68,8 +67,9 @@ a future network-sniffing test).
 
 1. **No real-world validation.** Only a hand-written synthetic dataset exists
    (`src/lib/sample.ts:3-8`). Signal thresholds are tuned by intuition, not data.
-2. **Performance.** The duplicate scan is O(n²) (`src/lib/engine.ts:115-122`); measured
-   8.24 s at 5,000 reviews makes paste-large-review-set use unrealistic.
+2. **Performance (resolved 2026-11-26).** The O(n²) duplicate scan was replaced by
+   grouped/prefix-filtered detection; 5,000 reviews now take 649.97 ms median. The
+   new algorithm must stay exact — a regression test counts duplicate pairs.
 3. **Claim drift.** Marketing copy previously stated a "trust index", "Do not buy",
    "5 marketplaces", price history and seller verification that the code does not do.
 4. **Privacy reversal.** Recovered work in a separate local copy includes Supabase
@@ -98,3 +98,4 @@ a future network-sniffing test).
 | S1 | 2026-11-25 | Phase 1 read-only audit: read `package.json`, `README.md`, `PANGAEA-RECOVERY.md`, all `src/lib/*`, `src/app/**`, CI configs; `Get-ChildItem`, `git status`, `node --version`, `gh auth status`, `gh repo view`, `npm.cmd run build`, `npm.cmd run test`, `npm.cmd run lint`, `Invoke-WebRequest` to Pages URL | `npm.cmd run build` | Build passed; 3 static routes. `test`/`lint` scripts missing (npm error). Repo `yermukhamed0777/pangaea` is PUBLIC. Live URL HTTP 200. |
 | S2 | 2026-11-25 | Phase 2/3 implementation: verification harness, engine wording fix, claim reconciliation, scrubbed recovery notes, restored research brief, public-repo scaffolding, CI, and `plan/` | `npm.cmd run verify` | typecheck clean, 12/12 tests pass, benchmark and build pass; see `plan/progress.md` for exact numbers. |
 | S3 | 2026-11-25 | Phase 5 push: untracked generated `out/`, committed `ad5a773`, pushed to existing public repo, closed P0-2/P0-10 in the plan | `git ls-remote`, `gh run watch 45626579139`, `gh run watch 45626579090`, `Invoke-WebRequest` | remote HEAD equals local; CI success in 39 s; Pages success; live page relabelled. |
+| S4 | 2026-11-26 | Engine correctness: fast exact duplicate detection, strict dates, reproducible exclusions, removed `score` | `npm.cmd test`, `npm.cmd run bench` at 5,000/20 | 16/16 tests pass; median 649.97 ms; demo signal list unchanged; P0-6…P0-9 closed. |

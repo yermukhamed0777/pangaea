@@ -5,6 +5,10 @@ Every item is split into **Intelligence** (what the assistant can do) and **Huma
 Numbers described as targets are proposals, not measurements. See `plan/strategy.md`
 for the measured baseline and `plan/backlog.md` for IDs.
 
+Status (2026-11-26): short-term items 1–5 (P0-2, P0-6…P0-10) are complete and
+verified. Item 6 (P1-1) and the local eval harness (P1-2) are next. The work split
+below is unchanged; human gates remain at M1/M2/M3.
+
 ## 1. Short term — concrete next steps
 
 1. **Land the verified commit and confirm CI** (P0-2, P0-10)

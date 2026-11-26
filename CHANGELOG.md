@@ -4,6 +4,25 @@ All notable changes are recorded here. Dates are in UTC where known; otherwise t
 local date is used. The first entry records the baseline state and this session's
 changes; earlier history was not available locally and is not invented.
 
+## 2026-11-26 — engine correctness
+
+### Changed
+- `src/lib/engine.ts`: near-duplicate detection now groups identical gram sets,
+  uses a document-frequency prefix filter and retains only the pair count, the
+  five strongest pairs and the full excluded-ID set (P0-6). Median for 5,000
+  reviews / 20 runs fell from 8,240.58 ms to 649.97 ms.
+- `src/lib/engine.ts`: dates are parsed strictly as ISO (`YYYY-MM-DD`, optional
+  time suffix) with `Date.UTC`, removing locale-sensitive `Date.parse` (P0-7).
+- `src/lib/engine.ts`: the adjusted average excludes every review behind the
+  text/rating signals, and `Analysis.excludedIds` is exported so the figure can
+  be reproduced from a report (P0-8). Demo adjusted average is now 4.18.
+- `src/lib/types.ts`: removed the unused, unverifiable `score` field (P0-9).
+
+### Added
+- Four regression tests (16/16 total): strict date parsing, reproducible
+  adjusted average, exact duplicate-pair count, and absence of `score`.
+- `BENCH_REVIEWS` / `BENCH_RUNS` environment overrides for `scripts/bench.ts`.
+
 ## 2026-11-25 — verification harness, claim reconciliation, planning
 
 ### Added

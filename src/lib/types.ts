@@ -24,9 +24,11 @@ export type Analysis = {
   average: number;
   cleanAverage: number | null;
   distribution: number[];
+  /** Number of reviews removed from the adjusted average. */
   excluded: number;
+  /** Every removed review ID, so the adjusted average is reproducible. */
+  excludedIds: string[];
   signals: Signal[];
-  score: number;
   limits: string[];
 };
 

@@ -6,8 +6,8 @@
 import { analyze } from "../src/lib/engine.ts";
 import type { Review } from "../src/lib/types.ts";
 
-const REVIEW_COUNT = 2000;
-const RUNS = 10;
+const REVIEW_COUNT = Number(process.env.BENCH_REVIEWS || 2000);
+const RUNS = Number(process.env.BENCH_RUNS || 10);
 
 function syntheticReviews(n: number): Review[] {
   let seed = 42;

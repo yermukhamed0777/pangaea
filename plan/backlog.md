@@ -43,24 +43,27 @@ append-only decisions in `plan/decisions.md`.
   verdict, marketplace importer, seller verification or price history. Verified by
   editing and typecheck/build; visual review still pending (see P0-10).
 
-- [ ] **P0-6 — Remove the O(n²) duplicate scan.** Ref: `src/lib/engine.ts:115-122`.
-  Measured median 8,240.58 ms for 5,000 reviews / 20 runs.
-  **Done when:** 5k/20-run median below 1,000 ms on this machine and the demo signal
-  list/IDs are unchanged.
+- [x] **P0-6 — Remove the O(n²) duplicate scan.** Ref: `src/lib/engine.ts` `duplicatePairs`.
+  Replaced the all-pairs array with combinatorial grouping of identical gram sets,
+  document-frequency prefix filtering and a two-pointer Jaccard check; only the count,
+  top-five pairs and excluded IDs are retained. **Done when:** 5k/20-run median below
+  1,000 ms and the demo signal list/IDs unchanged. Measured 649.97 ms; 16/16 tests pass.
+  Verified 2026-11-26.
 
-- [ ] **P0-7 — Make date handling deterministic.** Refs: `src/lib/engine.ts:56-58,92`,
-  `src/lib/engine.ts:65-82`. Raw string sort plus repeated `Date.parse` is locale-sensitive.
-  **Done when:** tests cover ISO, non-ISO and invalid dates; output is locale-independent.
+- [x] **P0-7 — Make date handling deterministic.** Refs: `parseDate` in `src/lib/engine.ts`.
+  ISO dates only (time suffix ignored), validated with `Date.UTC`; `reviewsFromText`
+  and the engine share the parser. **Done when:** tests cover ISO, non-ISO and invalid
+  dates; output is locale-independent. Verified 2026-11-26.
 
-- [ ] **P0-8 — Resolve truncated evidence used by the adjusted average.** Refs:
-  `src/lib/engine.ts:109,132,203,222,226-233`. Evidence IDs are sliced to 5-8 items,
-  but `excluded` and `cleanAverage` are presented as if computed from all flagged reviews.
-  **Done when:** the exported report can reproduce "Adjusted" without an undocumented cap.
+- [x] **P0-8 — Resolve truncated evidence used by the adjusted average.** Refs:
+  `src/lib/engine.ts` flagged/excluded block. `excludedIds` now carries every removed
+  review ID; display IDs remain capped and the cap is stated in `limits`.
+  **Done when:** the exported report can reproduce "Adjusted" without an undocumented
+  cap. Test recomputes 4.18 from the demo IDs. Verified 2026-11-26.
 
-- [ ] **P0-9 — Decide the orphaned `score` field.** Refs: `src/lib/types.ts:29`,
-  `src/lib/engine.ts:244`. Computed but never displayed.
-  **Done when:** either displayed with a precise non-verdict label or removed; decision
-  appended to `plan/decisions.md`.
+- [x] **P0-9 — Decide the orphaned `score` field.** Refs: `src/lib/types.ts`,
+  `src/lib/engine.ts`. Removed from `Analysis` and the engine; test asserts no `score`
+  key. Decision appended to `plan/decisions.md`. Verified 2026-11-26.
 
 - [x] **P0-10 — Re-verify the published page after push.** Ref: `.github/workflows/deploy.yml`.
   After deploy run `45626579090`, a fresh Pages request returned HTTP 200, length 51358,

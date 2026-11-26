@@ -109,3 +109,34 @@ entry, and `plan/strategy.md` (status snapshot and session table). No source cod
 
 **Open items mapped:** P0-6, P0-7, P0-8, P0-9, P1-1, P1-2, M1-1 … M1-4, M2-1 … M2-3,
 M3-1, M3-2. P0-2 and P0-10 are now closed. Next action: P0-6 (remove the O(n²) scan).
+
+## 2026-11-26 — S4: engine correctness (P0-6 … P0-9)
+
+**Changed:** `src/lib/engine.ts`, `src/lib/types.ts`, `tests/engine.test.ts`,
+`scripts/bench.ts`, `plan/backlog.md`, `plan/decisions.md`, `plan/progress.md`.
+
+**Exact changes:**
+- `parseDate` added: strict `YYYY-MM-DD` with optional time suffix, validated via
+  `Date.UTC`; no `Date.parse` remains. `reviewsFromText` uses it and keeps rejected
+  dates as `null`.
+- `duplicatePairs` rewritten: identical gram sets grouped combinatorially,
+  prefix filter over document-frequency-ranked 5-grams, length filter, two-pointer
+  Jaccard; count + top five pairs + full excluded ID set only, no per-pair array.
+- Tightened two-pointer timing window and single-pass author map; numbers unchanged.
+- `Analysis.excludedIds` added; `Analysis.score` removed.
+- `tests/engine.test.ts`: four new regression tests (ISO/non-ISO dates, reproducible
+  adjusted average, exact duplicate pair count, absence of `score`).
+- `scripts/bench.ts`: `BENCH_REVIEWS` / `BENCH_RUNS` environment overrides, default 2000/10.
+
+**Commands and results (exact):**
+- `npm.cmd test` → `tests 16 / pass 16 / fail 0` in 146.34 ms (final pass).
+- `npm.cmd run bench` with `BENCH_REVIEWS=5000`, `BENCH_RUNS=20` →
+  `engine bench: 5000 reviews, 20 runs, median 649.97 ms, 1.5 analyses/s, signals 3`.
+  Baseline recorded earlier: 8,240.58 ms for the same command.
+- `analyze(demoReviews())` → count 20, average 4.4, cleanAverage 4.18, excluded 9,
+  excludedIds `d3,d4,d5,d20,d9,d10,d2,d15,d18`; signals unchanged:
+  `timing-burst, text-duplicates, rating-five-heavy, identity-concentration,
+  verification-low, text-low-substance`; limits 7.
+
+**Open items mapped:** P1-1, P1-2, M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
+P0-6, P0-7, P0-8 and P0-9 are closed. Next action: P1-1 (CSV/JSON import).
