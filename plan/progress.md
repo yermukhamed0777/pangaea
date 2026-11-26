@@ -352,3 +352,22 @@ No engine or UI behaviour changed; no product feature was added.
 The product is frozen; the canonical URL and alternative deployment are
 recorded in `docs/RELEASE.md`. Validation commit: `959ec73`. This
 documentation-only amendment uses `[skip ci]` to avoid a redundant deploy.
+
+## 2026-11-26 — S12: confirmed push, CI and Pages deployment at freeze
+
+| Command / observation | Exact result |
+|---|---|
+| `git push origin main` | `42a2a00..5d95ff0  main -> main`; exit 0 (one non-fatal credential-helper path warning). |
+| `git ls-remote origin refs/heads/main` / `git rev-parse HEAD` | both `5d95ff0fd3d1d1decf3a445546a54fa4965d3f8f`. |
+| `gh run list` immediately after push | no new run: the head commit message contained `[skip ci]`, which suppressed CI for the whole push event. |
+| `gh workflow run "Verify PANGAEA" --ref main` | created run `45792721462` (`workflow_dispatch`, head `5d95ff0`). |
+| `gh run watch 45792721462 --exit-status --interval 10` | exit 0; `verify in 44s`; all steps green including `npm run verify`. Annotation only: Node-20-targeted actions forced onto Node 24. |
+| `gh run list` after CI | gated Pages run `45792857706`, event `workflow_run`, head `5d95ff0`, `in_progress`. |
+| `gh run watch 45792857706 --exit-status --interval 10` | exit 0; `build in 28s`, `deploy in 8s`; annotations only (Node 20 action deprecation). |
+| `npm.cmd run test:e2e` with `E2E_BASE_URL=https://yermukhamed0777.github.io` | 6/6 checks after deployment. |
+| `npm.cmd run test:e2e` with `E2E_BASE_URL=https://pangaea-gules.vercel.app` | 6/6 checks; alternative deployment untouched. |
+| Live page probe | `https://yermukhamed0777.github.io/pangaea/` HTTP 200, length 52115; served `_next/static/chunks/05-c3ty_6dwfk.js` SHA-256 matched local `out/`. `workbench.html` differed only in the per-build nonce string (`b`), not in content structure — expected for a rebuilt static export. |
+
+The freeze is published and CI-verified. No product feature was added; no
+usage, accuracy or revenue figure was measured. Human-only items remain M1-1,
+M1-2 and M3-2.
