@@ -1,9 +1,12 @@
 name: Deploy PANGAEA to GitHub Pages
 
+# Deployment is gated on a green "Verify PANGAEA" run, so a red suite can
+# never publish. The exact verified SHA is checked out and built.
 on:
-  push:
+  workflow_run:
+    workflows: ["Verify PANGAEA"]
+    types: [completed]
     branches: [main]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,12 +19,16 @@ concurrency:
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run build
       - uses: actions/configure-pages@v5

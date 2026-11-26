@@ -20,9 +20,9 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
-      - name: Tests and typecheck
-        run: npm run typecheck && npm test
-      - name: Benchmark (report only, no threshold)
-        run: npm run bench
-      - name: Static build
-        run: npm run build
+      # typecheck -> lint (warnings denied) -> tests -> eval -> event check ->
+      # benchmark -> build -> offline check -> both basePath variants ->
+      # browser e2e -> walkthrough fixtures. A red step stops the workflow,
+      # and Pages deployment only runs after this workflow succeeds.
+      - name: Full verification suite
+        run: npm run verify

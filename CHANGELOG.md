@@ -4,6 +4,22 @@ All notable changes are recorded here. Dates are in UTC where known; otherwise t
 local date is used. The first entry records the baseline state and this session's
 changes; earlier history was not available locally and is not invented.
 
+## 2026-11-26 — verification matrix
+
+### Added
+- ESLint flat config with `typescript-eslint`; `npm run lint` denies warnings (V1).
+- `scripts/check-offline.ts` (V2), `scripts/check-build-variants.ts` for `/` and
+  `/pangaea` builds (V3), `scripts/e2e.ts` with local-Chromium browser checks (V4).
+- `src/lib/events.ts` content-free event harness and `scripts/check-events.ts` (V5).
+- `scripts/walkthrough.ts` deterministic fixtures in `docs/walkthrough/` (V6).
+- `npm run verify` runs the whole matrix; CI uses it and Pages deployment is
+  gated on a green CI run of the verified SHA (V7).
+
+### Changed
+- `next.config.ts`: `PANGAEA_BASE_PATH` selects root or subpath build.
+- Workbench emits only allowlisted content-free event counts.
+- Dev dependencies: eslint, typescript-eslint, cross-env, playwright-core.
+
 ## 2026-11-26 — local eval harness
 
 ### Added

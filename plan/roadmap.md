@@ -5,9 +5,10 @@ Every item is split into **Intelligence** (what the assistant can do) and **Huma
 Numbers described as targets are proposals, not measurements. See `plan/strategy.md`
 for the measured baseline and `plan/backlog.md` for IDs.
 
-Status (2026-11-26): all short-term items (P0-2, P0-6…P0-10, P1-1, P1-2) are
-complete and verified. Work now proceeds on the verification matrix and CV-ready
-finish. The work split below is unchanged; human gates remain at M1/M2/M3.
+Status (2026-11-26): all short-term items (P0-2, P0-6…P0-10, P1-1, P1-2) and the
+verification matrix (V1…V7) are complete and verified locally. CI runs the same
+suite and gates Pages on it. Remaining agent work: CV-ready copy/docs and the
+agent-decidable product decisions; human gates remain at M1/M2/M3.
 
 ## 1. Short term — concrete next steps
 

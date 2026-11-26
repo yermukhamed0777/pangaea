@@ -185,3 +185,41 @@ sets a non-zero exit code on any mismatch. No real data or third-party licence i
 **Open items mapped:** M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
 P1-2 is closed. Note: M1-1 (licensed real dataset) and M1-2 (consented users) remain
 human-only; this harness is not real-world validation.
+
+## 2026-11-26 — S7: verification matrix (V1 … V7)
+
+**Changed:** `package.json` (+ lint/build-variant/offline/e2e/event/walkthrough scripts,
+`verify` now runs everything; + dev dependencies), `eslint.config.mjs` (new),
+`next.config.ts` (`PANGAEA_BASE_PATH`), `.github/workflows/ci.yml` (full suite),
+`.github/workflows/deploy.yml` (`workflow_run` gate on green CI), `.gitignore`
+(`.build-check/`), `src/lib/events.ts` (new), `src/lib/sample.ts` (`demoOffers`),
+`src/app/workbench/page.tsx` (event emits), `scripts/check-build-variants.ts`,
+`scripts/check-offline.ts`, `scripts/e2e.ts`, `scripts/check-events.ts`,
+`scripts/walkthrough.ts`, `tests/events.test.ts`, `docs/walkthrough/{report.json,SCENES.md}`,
+`plan/backlog.md`, `plan/decisions.md`, `plan/progress.md`.
+
+**Commands and results (exact):**
+- `npm.cmd ci --no-audit --no-fund` → `added 201 packages in 19s`; one non-fatal
+  npm `allow-scripts` warning for `sharp` (install script not approved; unused by
+  static export because images are unoptimized).
+- Final `npm.cmd run verify` → typecheck clean; `eslint . --max-warnings 0` clean;
+  `tests 33 / pass 33 / fail 0`; `eval: 8 synthetic cases, 0 mismatches`;
+  `PASS events: 5 allowlisted names, 6 counts, 0 content fields`;
+  `engine bench: 2000 reviews, 10 runs, median 122.34 ms, 8.2 analyses/s, signals 3`;
+  build → 3 static routes (`/`, `/workbench`, `/_not-found`);
+  `offline: scanned 18 source files, 4 HTML files, 0 external refs`;
+  `PASS build-variants: root` and `PASS build-variants: subpath`, `2/2 variants verified`;
+  `PASS e2e` ×5 (landing, ledger, export, CSV import, zero external requests);
+  `walkthrough: wrote report.json and SCENES.md (20 reviews, 6 signals, 3 offers)`.
+- `npm.cmd run walkthrough` twice → `report.json` SHA-256 prefix `0157E5711C054A17`
+  and `SCENES.md` prefix `D96084B084CFBB38` identical on both runs.
+- Earlier `npm.cmd run verify` at clean install: tests 33/33 in 174.23 ms, bench
+  median 131.83 ms. Earlier 5,000/20 benchmark: 649.97 ms.
+- Three intermediate failures were fixed, not hidden: (1) `check-build-variants`
+  needed `shell: true` to spawn `npm.cmd` on Windows; (2) e2e strict-mode matched
+  two "Open workbench" links, so `.first()` was used; (3) e2e CSV assertion raced
+  the React state update, so it now waits for the format label before asserting.
+
+**Open items mapped:** M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
+V1…V7 are closed. Next action: CV-ready copy/docs and agent-decidable product
+decisions (M1-3, M1-4, M2-2, M2-3, M3-1).

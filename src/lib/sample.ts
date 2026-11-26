@@ -1,4 +1,4 @@
-import type { Review } from "./types";
+import type { Offer, Review } from "./types";
 
 /**
  * SYNTHETIC demo data. Written by hand for testing the engine.
@@ -37,4 +37,13 @@ export function demoReviews(): Review[] {
 
 export function demoText(): string {
   return DEMO.map(([rating, date, author, text]) => `${rating} | ${date} | ${author} | ${text}`).join("\n");
+}
+
+/** Illustrative offers used by the workbench and the walkthrough fixtures. */
+export function demoOffers(): Offer[] {
+  return [
+    { shop: "Shop A", price: 42, units: 1, shipping: 8.5, dutyPct: 8, vatPct: 12 },
+    { shop: "Shop B", price: 34, units: 2, shipping: 6, dutyPct: 8, vatPct: 12 },
+    { shop: "Shop C", price: 29.9, units: 1, shipping: 12, dutyPct: 0, vatPct: 12 },
+  ];
 }

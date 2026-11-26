@@ -1,19 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Download, FlaskConical, Info, Play, Trash2 } from "lucide-react";
 import { analyze } from "../../lib/engine";
 import { parseReviews, type ImportFormat } from "../../lib/imports";
 import { compareOffers, savingPercent } from "../../lib/cost";
-import { demoReviews, demoText } from "../../lib/sample";
+import { demoOffers, demoReviews, demoText } from "../../lib/sample";
+import { eventSink } from "../../lib/events";
 import type { Offer } from "../../lib/types";
-
-const INITIAL_OFFERS: Offer[] = [
-  { shop: "Shop A", price: 42, units: 1, shipping: 8.5, dutyPct: 8, vatPct: 12 },
-  { shop: "Shop B", price: 34, units: 2, shipping: 6, dutyPct: 8, vatPct: 12 },
-  { shop: "Shop C", price: 29.9, units: 1, shipping: 12, dutyPct: 0, vatPct: 12 },
-];
 
 export default function Workbench() {
   const [text, setText] = useState("");
@@ -21,14 +16,17 @@ export default function Workbench() {
   const [format, setFormat] = useState<ImportFormat>("pipe");
   const [error, setError] = useState<string | null>(null);
   const [analysis, setAnalysis] = useState(() => analyze(demoReviews()));
-  const [offers, setOffers] = useState<Offer[]>(INITIAL_OFFERS);
+  const [offers, setOffers] = useState<Offer[]>(demoOffers);
   const [openSignal, setOpenSignal] = useState<string | null>("timing-burst");
 
   const costs = useMemo(() => compareOffers(offers), [offers]);
   const saving = useMemo(() => savingPercent(costs), [costs]);
 
+  useEffect(() => { eventSink.emit("workbench.opened"); }, []);
+
   function run(input = text) {
     const parsed = parseReviews(input);
+    if (!parsed.error) eventSink.emit("analysis.run");
     setFormat(parsed.format);
     setError(parsed.error);
     const reviews = parsed.reviews.length ? parsed.reviews : demoReviews();
@@ -37,11 +35,13 @@ export default function Workbench() {
   }
 
   function loadDemo() {
+    eventSink.emit("demo.loaded");
     setText(demoText());
     run(demoText());
   }
 
   function exportReport() {
+    eventSink.emit("report.exported");
     const payload = {
       product: "PANGAEA forensics report",
       generated: new Date().toISOString(),
@@ -123,6 +123,7 @@ export default function Workbench() {
                     onChange={async (e) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
+                      eventSink.emit("import.file");
                       const content = await file.text();
                       setText(content);
                       run(content);
