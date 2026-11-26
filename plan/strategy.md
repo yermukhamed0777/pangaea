@@ -6,12 +6,14 @@ Local and remote HEAD are both `129f4ed85117f80e752a11711303dd7c5632b71b`; CI ru
 served the new copy (HTTP 200, length 52115). The duplicate scan no longer dominates:
 measured benchmark is **649.97 ms**
 median for 5,000 reviews / 20 runs (was 8,240.58 ms), so the P0-6 target is met.
-Tests: **33/33 pass**; eval harness **8/8 synthetic cases, 0 mismatches**.
+Tests: **42/42 pass**; eval harness **8/8 synthetic cases, 0 mismatches**.
 `npm run verify` (typecheck → lint → tests → eval → events → bench → build →
 offline → both basePath variants → browser e2e → walkthrough) is green locally.
-CI runs the same command; Pages deploys only on a green CI run.
-Next action: handoff to the human pilot owner; push is withheld pending
-confirmation. Only M1-1, M1-2 and M3-2 remain genuinely human-only.
+CI runs the same command; Pages deploys only on a green CI run. Final
+validation added targeted edge-case coverage and published runtime/memory
+measurements; both deployment hosts pass the same six browser checks.
+**Status: frozen.** Next action: handoff to the human pilot owner. Only M1-1,
+M1-2 and M3-2 remain genuinely human-only.
 
 ## Market and thesis
 
@@ -62,7 +64,7 @@ Measured now (commands and results are in `plan/progress.md`):
 | Local eval | 8 synthetic cases, 0 mismatches | `npm run eval` |
 | Event harness | 5 allowlisted names, 0 content fields | `npm run check:events` |
 | Browser e2e | 5 checks pass, 0 external requests | `npm run test:e2e` |
-| Benchmark (CI setting) | 113.29 ms median, 2,000 reviews, 10 runs | `npm run bench` |
+| Benchmark (CI setting) | 132.39 ms median, 2,000 reviews, 10 runs (final run) | `npm run bench` |
 | Offline | 18 source files, 4 HTML files, 0 external refs | `npm run check:offline` |
 | Build variants | 2/2 (`/` and `/pangaea`) | `npm run check:build-variants` |
 | Typecheck | clean | `npm run typecheck` |
@@ -124,3 +126,4 @@ the browser request assertion in `npm run test:e2e`, not merely proposed.
 | S7 | 2026-11-26 | Verification matrix: lint, offline check, both basePath builds, browser e2e, content-free events, walkthrough fixtures, CI full suite and gated deploy | `npm.cmd ci`, `npm.cmd run verify` | clean install; 33/33 tests; 8/8 eval; 5/5 e2e; 2/2 build variants; 0 external refs; V1…V7 closed. |
 | S8 | 2026-11-26 | CV-ready README/docs, landing-page claim reconciliation, pilot handoff, cloud boundary and agent product defaults | `npm.cmd run verify` | full suite green; only M1-1, M1-2 and M3-2 remain human-only. |
 | S10 | 2026-11-26 | Confirmed push, CI verification and gated Pages deployment | `git push`, `gh run watch 45752257398`, `gh run watch 45752366645`, `Invoke-WebRequest` | CI success in 1m3s; gated deploy success in 27s+14s; live page HTTP 200 with new copy. |
+| S11 | 2026-11-26 | Final algorithm validation, runtime/memory benchmark, hosting reconciliation, freeze docs | `npm.cmd run verify`, `npm.cmd run bench:memory`, `npm.cmd run test:e2e` on three bases | 42/42 tests; 6/6 e2e on Pages and Vercel; benchmark 500–20,000 reviews published; product frozen. |

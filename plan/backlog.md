@@ -13,6 +13,7 @@ append-only decisions in `plan/decisions.md`.
 | Midterm (M1, M2) | M1-1 … M1-4, M2-1 … M2-3 | Needs human permission, data or legal review. |
 | Long term (M3+) | M3-1, M3-2 | Product shape and business milestones. |
 | Verification & finish (V) | V1 … V7 | Agent-executable verification and CV/handoff artefacts. |
+| Final freeze (F) | F-01 … F-04 | Algorithm validation, benchmark, hosting reconciliation, release docs. |
 
 ## P0 — now
 
@@ -125,6 +126,32 @@ append-only decisions in `plan/decisions.md`.
   triggers on `workflow_run` only when CI succeeds, checking out the verified SHA.
   **Done when:** local full suite green and workflow gating present. Verified locally
   2026-11-26; remote run IDs are recorded only after a confirmed push.
+
+## F — final algorithm validation and freeze
+
+- [x] **F-01 — Reproduce the release verification.** Refs: `npm run verify`.
+  **Done when:** typecheck, lint, 42 tests, eval, event check, benchmark, build,
+  offline check, both build variants, browser e2e and walkthrough all pass.
+  Verified 2026-11-26.
+
+- [x] **F-02 — Expand validation coverage where necessary.** Ref:
+  `tests/validation-coverage.test.ts`. Nine cases cover genuine bursts,
+  legitimate repeated terminology, tiny/imbalanced data, duplicated/malformed
+  imports, missing verification metadata, multilingual input, bad dates/ratings,
+  cost edge cases and the `excludedIds` adjusted-average identity.
+  **Done when:** all targeted tests pass and every signal keeps benign/concern.
+  Verified 2026-11-26.
+
+- [x] **F-03 — Publish runtime and memory evidence.** Refs:
+  `scripts/bench-fixtures.ts`, `scripts/bench-memory.ts`, `docs/benchmark/`.
+  **Done when:** hardware, sizes, repetitions, methodology and measured results
+  are written to a deterministic fixture and versioned report. Verified.
+
+- [x] **F-04 — Reconcile hosting and freeze documentation.** Refs:
+  `docs/RELEASE.md`, `docs/ALGORITHM.md`, `docs/DEMO.md`, `README.md`.
+  Canonical URL is the Pages subpath; the Vercel production deployment is kept.
+  Browser e2e passes on both, with no transmitted review text.
+  **Done when:** both hosts verified and no product feature added. Verified.
 
 ## M1 — validation (human gates)
 

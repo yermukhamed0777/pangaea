@@ -313,3 +313,41 @@ No source code changed.
 **Open items mapped:** M1-1, M1-2, M3-2 only. Push, CI and deployment are complete;
 the publication boundary is closed. This log commit uses `[skip ci]` so it does
 not trigger a redundant verify/deploy cycle.
+
+## 2026-11-26 — S11: final algorithm validation and freeze
+
+**Changed:** `tests/validation-coverage.test.ts` (new), `scripts/bench-fixtures.ts`
+(new), `scripts/bench-memory.ts` (new), `scripts/bench.ts` (shared fixture),
+`scripts/e2e.ts` (`E2E_BASE_URL`, no-transmission assertion), `package.json`,
+`docs/benchmark/{BENCHMARK.md,results.json}`, `docs/{ALGORITHM,DEMO,RELEASE}.md`,
+`README.md`, `CHANGELOG.md`, `plan/{backlog,decisions,progress}.md`.
+No engine or UI behaviour changed; no product feature was added.
+
+**Commands and results (exact):**
+- `npm.cmd run verify` → exit 0; typecheck clean; `eslint --max-warnings 0`
+  clean; **tests 42 / pass 42 / fail 0**; `eval: 8 synthetic cases, 0 mismatches`;
+  `PASS events: 5 allowlisted names, 6 counts, 0 content fields`;
+  `engine bench: 2000 reviews, 10 runs, median 116.89 ms, 8.6 analyses/s`;
+  final reproduction after documentation edits: median 132.39 ms, 7.6 analyses/s;
+  build with 3 static routes; `offline: scanned 18 source files, 4 HTML files,
+  0 external refs`; `build-variants: 2/2 variants verified`; 6 e2e PASS lines;
+  walkthrough fixtures written.
+- `npm.cmd run bench:memory` → AMD Ryzen 9 8940HX, 32 logical cores, 31.2 GiB
+  RAM, win32 x64 (10.0.26300), Node v24.18.1; 2 warm-ups + 5 runs per size;
+  medians: 500→19.84 ms, 1,000→50.29 ms, 2,000→138.52 ms, 5,000→619.59 ms,
+  10,000→2,871.40 ms, 20,000→14,458.24 ms; peak RSS 78–344 MiB. Written to
+  `docs/benchmark/`.
+- `npm.cmd run test:e2e` (local export) → 6/6 checks including
+  `PASS e2e: imported review text was not transmitted`.
+- `E2E_BASE_URL=https://yermukhamed0777.github.io npm.cmd run test:e2e` → 6/6.
+- `E2E_BASE_URL=https://pangaea-gules.vercel.app npm.cmd run test:e2e` → 6/6.
+  Vercel deployment `pangaea/2vpfGgQv8h8WDfQYgCsXMHEavWbq` is Production/Current
+  for `42a2a00` (read-only Vercel deployment detail); bare `/` is 404 while
+  `/pangaea` and `/pangaea/workbench` serve the app.
+- Two initially failing new tests were corrected, not hidden: an invalid date
+  does not invalidate an otherwise valid rating, and the fractional-offer
+  saving is 16.7% (not 33.3%). Both expectations were wrong, not the code.
+
+**Open items mapped:** F-01…F-04 are Done; M1-1, M1-2 and M3-2 remain human-only.
+The product is frozen; the canonical URL and alternative deployment are
+recorded in `docs/RELEASE.md`.

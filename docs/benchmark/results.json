@@ -1,0 +1,87 @@
+{
+  "generatedBy": "npm run bench:memory",
+  "command": "node --expose-gc --experimental-strip-types scripts/bench-memory.ts",
+  "fixture": "scripts/bench-fixtures.ts (fixed LCG seed 42)",
+  "methodology": "2 unmeasured warm-ups; forced GC before each measured run; heapUsed sampled before/after; wall time via performance.now(); rss is a process high-water mark.",
+  "hardware": {
+    "cpu": "AMD Ryzen 9 8940HX with Radeon Graphics",
+    "logicalCores": 32,
+    "totalMemoryBytes": 33514369024,
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "node": "v24.18.1"
+  },
+  "sizes": [
+    500,
+    1000,
+    2000,
+    5000,
+    10000,
+    20000
+  ],
+  "runs": 5,
+  "warmup": 2,
+  "results": [
+    {
+      "reviews": 500,
+      "runs": 5,
+      "warmup": 2,
+      "medianMs": 19.84,
+      "p95Ms": 24.86,
+      "medianHeapDeltaBytes": 7861744,
+      "peakRssBytes": 81874944,
+      "signals": 3
+    },
+    {
+      "reviews": 1000,
+      "runs": 5,
+      "warmup": 2,
+      "medianMs": 50.29,
+      "p95Ms": 61.79,
+      "medianHeapDeltaBytes": 8344568,
+      "peakRssBytes": 134860800,
+      "signals": 3
+    },
+    {
+      "reviews": 2000,
+      "runs": 5,
+      "warmup": 2,
+      "medianMs": 138.52,
+      "p95Ms": 178.81,
+      "medianHeapDeltaBytes": 50055464,
+      "peakRssBytes": 209244160,
+      "signals": 3
+    },
+    {
+      "reviews": 5000,
+      "runs": 5,
+      "warmup": 2,
+      "medianMs": 619.59,
+      "p95Ms": 697.5,
+      "medianHeapDeltaBytes": 68488712,
+      "peakRssBytes": 232611840,
+      "signals": 3
+    },
+    {
+      "reviews": 10000,
+      "runs": 5,
+      "warmup": 2,
+      "medianMs": 2871.4,
+      "p95Ms": 4645.85,
+      "medianHeapDeltaBytes": 27959640,
+      "peakRssBytes": 268701696,
+      "signals": 3
+    },
+    {
+      "reviews": 20000,
+      "runs": 5,
+      "warmup": 2,
+      "medianMs": 14458.24,
+      "p95Ms": 26059.87,
+      "medianHeapDeltaBytes": 91871768,
+      "peakRssBytes": 361070592,
+      "signals": 3
+    }
+  ]
+}

@@ -5,12 +5,14 @@
 **Know what you're buying.** An evidence-first shopping-intelligence prototype —
 not a marketing site, and not a verdict engine.
 
-Live (verified reachable 2026-11-26, HTTP 200, length 52115):
-https://yermukhamed0777.github.io/pangaea/
+**Canonical demonstration URL:** https://yermukhamed0777.github.io/pangaea/
+(verified 2026-11-26, HTTP 200, length 52115). An alternative Vercel production
+deployment is retained at https://pangaea-gules.vercel.app/pangaea — both served
+the same build and passed the same six browser checks. See `docs/RELEASE.md`.
 
-> The published build matches the current `main` HEAD (`129f4ed`). CI run
-> `45752257398` and the gated Pages run `45752366645` both succeeded; exact
-> results are in `plan/progress.md`.
+> The reviewed release state was `129f4ed`; deployment evidence is at `42a2a00`
+> (CI `45752257398`, gated Pages `45752366645`). The final validation layer is
+> recorded in `docs/RELEASE.md` and `plan/progress.md`.
 
 ## What actually works
 
@@ -35,9 +37,10 @@ https://yermukhamed0777.github.io/pangaea/
 - **Zero network calls, zero accounts, zero API keys** in the browser build.
   Verified by `npm run check:offline` and a browser check.
 
-Measured on this machine (commands and results in `plan/progress.md`): 33/33
-tests pass; 8 synthetic eval cases with 0 mismatches; 5/5 browser checks; 5,000
-reviews analysed in 649.97 ms median over 20 runs; 2/2 build variants verified.
+Measured on this machine (commands and results in `docs/RELEASE.md`): 42/42
+tests pass; 8 synthetic eval cases with 0 mismatches; 6/6 browser checks on
+both deployments; 5,000 reviews analysed in 619.59 ms median; runtime/memory
+measured from 500 to 20,000 reviews with published methodology.
 
 **Not implemented:** sign-in, saved reports, marketplace importers, price history,
 seller verification, theme extraction, real customer data, and cross-shop product
@@ -88,18 +91,21 @@ npm run verify
 ```
 
 That single command runs, in CI order: typecheck → lint (warnings denied) →
-33 unit tests → 8-case local eval → content-free event check → benchmark →
+42 unit tests → 8-case local eval → content-free event check → benchmark →
 static build → offline/privacy check → both basePath variants → browser e2e →
 deterministic walkthrough fixtures. A failure in any step stops the chain and, in
 CI, blocks deployment. The benchmark is report-only (no timing threshold).
 
 Individual scripts: `npm run typecheck`, `npm run lint`, `npm test`, `npm run eval`,
-`npm run check:events`, `npm run bench`, `npm run build`, `npm run check:offline`,
-`npm run check:build-variants`, `npm run test:e2e`, `npm run walkthrough`.
-For a video-ready capture, build first and run `CAPTURE=1 npm run test:e2e`.
+`npm run check:events`, `npm run bench`, `npm run bench:memory`, `npm run build`,
+`npm run check:offline`, `npm run check:build-variants`, `npm run test:e2e`,
+`npm run walkthrough`. For a video-ready capture, build first and run
+`CAPTURE=1 npm run test:e2e`.
 
 The browser e2e uses `playwright-core` with a locally installed Chrome (or Edge).
-Set `CHROME_PATH` to override the browser executable.
+Set `CHROME_PATH` to override the executable, or set `E2E_BASE_URL` to run the
+same six checks against a deployed URL. It asserts zero external requests and
+that imported review text is never transmitted.
 
 ## Structure
 
@@ -114,6 +120,11 @@ Set `CHROME_PATH` to override the browser executable.
 | `src/app/components/` | Landing page sections |
 | `tests/`, `tests/fixtures/` | Unit tests and the synthetic eval fixture |
 | `scripts/` | Benchmark, eval, offline/variant/event checks, e2e, walkthrough |
+| `docs/ALGORITHM.md` | Methodology, thresholds, formulas and limitations |
+| `docs/RELEASE.md` | Frozen release record, verification and hosting reconciliation |
+| `docs/DEMO.md` | Two-minute demonstration and deterministic capture |
+| `docs/benchmark/` | Reproducible runtime/memory fixtures, results and report |
+| `scripts/bench-fixtures.ts`, `scripts/bench-memory.ts` | Deterministic fixtures and scaling benchmark |
 | `docs/walkthrough/` | Deterministic fixtures and capture instructions |
 | `.github/workflows/` | Full-suite CI and gated Pages deployment |
 | `plan/` | Strategy, roadmap, backlog, decision/progress logs, pilot handoff |

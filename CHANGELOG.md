@@ -4,6 +4,27 @@ All notable changes are recorded here. Dates are in UTC where known; otherwise t
 local date is used. The first entry records the baseline state and this session's
 changes; earlier history was not available locally and is not invented.
 
+## 2026-11-26 — final algorithm validation and freeze
+
+### Added
+- `tests/validation-coverage.test.ts`: nine targeted cases for genuine bursts
+  with benign explanations, legitimate repeated terminology, tiny/imbalanced
+  data, duplicated/malformed imports, missing verification metadata, multilingual
+  text, bad dates/ratings, cost edge cases and the `excludedIds` → adjusted-average
+  identity across every eval fixture (42 tests total).
+- `scripts/bench-fixtures.ts` and `scripts/bench-memory.ts`: shared deterministic
+  fixture plus runtime/memory benchmark at 500–20,000 reviews, with hardware,
+  repetitions and methodology published in `docs/benchmark/`.
+- `docs/ALGORITHM.md`, `docs/DEMO.md`, `docs/RELEASE.md` and `docs/benchmark/`.
+- Browser e2e now accepts `E2E_BASE_URL` and asserts that imported review text
+  is never transmitted; it passes on both the GitHub Pages and Vercel URLs.
+
+### Changed
+- Canonical demonstration URL is the GitHub Pages subpath; the Vercel production
+  deployment is retained as an alternative.
+- `scripts/bench.ts` uses the shared fixture module. No engine or product
+  feature changed; the product is frozen.
+
 ## 2026-11-26 — CV-ready finish
 
 ### Added

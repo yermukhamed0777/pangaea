@@ -17,6 +17,7 @@
     "lint": "eslint . --max-warnings 0",
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test",
     "bench": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/bench.ts",
+    "bench:memory": "node --expose-gc --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/bench-memory.ts",
     "eval": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/eval.ts",
     "verify": "npm run typecheck && npm run lint && npm test && npm run eval && npm run check:events && npm run bench && npm run build && npm run check:offline && npm run check:build-variants && npm run test:e2e && npm run walkthrough"
   },

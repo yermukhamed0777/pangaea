@@ -9,11 +9,13 @@ import { createServer } from "node:http";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { extname, join } from "node:path";
 import { chromium } from "playwright-core";
+import type { AddressInfo } from "node:net";
 
 const root = process.cwd();
 const outDir = join(root, "out");
-if (!existsSync(join(outDir, "index.html"))) {
-  console.error("e2e: run `npm run build` first");
+const REMOTE = process.env.E2E_BASE_URL?.replace(/\/$/, "") || "";
+if (!REMOTE && !existsSync(join(outDir, "index.html"))) {
+  console.error("e2e: run `npm run build` first, or set E2E_BASE_URL");
   process.exit(1);
 }
 
@@ -27,7 +29,7 @@ const TYPES: Record<string, string> = {
   ".woff2": "font/woff2",
 };
 
-const server = createServer((req, res) => {
+const server = REMOTE ? null : createServer((req, res) => {
   let pathname = decodeURIComponent(new URL(req.url || "/", "http://localhost").pathname);
   if (!pathname.startsWith("/pangaea")) { res.writeHead(404); res.end(); return; }
   pathname = pathname.slice("/pangaea".length) || "/";
@@ -39,10 +41,11 @@ const server = createServer((req, res) => {
   res.end(readFileSync(file));
 });
 
-await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
-const address = server.address();
-if (!address || typeof address === "string") throw new Error("e2e: no server address");
-const base = `http://127.0.0.1:${address.port}`;
+if (server) await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+const address = server?.address();
+if (!REMOTE && (!address || typeof address === "string")) throw new Error("e2e: no server address");
+const base = REMOTE || `http://127.0.0.1:${(address as AddressInfo).port}`;
+const allowedHost = new URL(base).hostname;
 
 let browser;
 try {
@@ -56,11 +59,13 @@ try {
   }
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const external: string[] = [];
+  const posts: string[] = [];
   page.on("request", (req) => {
     const u = new URL(req.url());
-    if (["http:", "https:"].includes(u.protocol) && !["127.0.0.1", "localhost"].includes(u.hostname)) {
+    if (["http:", "https:"].includes(u.protocol) && u.hostname !== allowedHost) {
       external.push(req.url());
     }
+    if (req.method() === "POST") posts.push(req.postData() || "");
   });
 
   const capture = process.env.CAPTURE === "1";
@@ -103,9 +108,14 @@ try {
   console.log("PASS e2e: local CSV file is parsed in the browser");
 
   assert.deepEqual(external, []);
+  assert.ok(
+    !posts.some((body) => /Texture is light|alice|2026-03-02/.test(body)),
+    "imported review text was transmitted in a POST body",
+  );
   console.log("PASS e2e: zero external network requests");
-  console.log("e2e: 5 checks passed");
+  console.log("PASS e2e: imported review text was not transmitted");
+  console.log("e2e: 6 checks passed");
 } finally {
   if (browser) await browser.close();
-  await new Promise<void>((resolve, reject) => server.close((err) => err ? reject(err) : resolve()));
+  if (server) await new Promise<void>((resolve, reject) => server.close((err) => err ? reject(err) : resolve()));
 }
