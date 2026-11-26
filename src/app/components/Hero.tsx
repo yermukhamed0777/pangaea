@@ -135,9 +135,9 @@ export default function Hero() {
             animate="show"
             className="mt-8 max-w-[540px] text-[17px] leading-relaxed text-muted sm:text-[19px]"
           >
-            Star ratings lie. PANGAEA reads what people actually wrote, catches the
-            patterns machines leave behind, and shows you the same product for less —
-            before you pay.
+            Star ratings hide the detail. PANGAEA reads what people wrote, surfaces
+            measurable patterns with the benign explanation beside each one, and adds
+            shipping, duty and VAT to the offers you enter — before you pay.
           </motion.p>
 
           <motion.div

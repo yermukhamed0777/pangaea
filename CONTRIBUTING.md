@@ -19,15 +19,22 @@ blocked by execution policy.
 
 ```
 npm ci
-npm run verify      # typecheck -> tests -> benchmark -> build
+npm run verify
 ```
 
-`npm run verify` must pass before any push. The benchmark reports numbers but
-has no pass/fail threshold; note a large regression in your commit message.
+`npm run verify` runs typecheck, lint with warnings denied, unit tests, the
+synthetic eval, the event-content check, the benchmark, a static build, the
+offline check, both basePath variants, browser e2e and the walkthrough fixtures.
+It must pass before any push. CI runs the same command and Pages deployment is
+gated on it. The benchmark reports numbers but has no pass/fail threshold; note a
+large regression in your commit message.
 
 ## Change rules
 
-- Add or update tests in `tests/` for any engine or cost change.
+- Add or update tests in `tests/` for any engine, cost or import change, and an
+  eval case in `tests/fixtures/eval-cases.ts` when signal behaviour changes.
+- Never store user text in events: only allowlisted names and counts in
+  `src/lib/events.ts`.
 - Do not edit generated `out/` or `.next/`; they are ignored and regenerated.
 - No secrets, `.env` files, personal data, or credential locations in tracked files.
 - Follow `plan/README.md`: in the **same commit** as the work, update the backlog,

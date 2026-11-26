@@ -2,34 +2,47 @@
 
 [![Verify PANGAEA](https://github.com/yermukhamed0777/pangaea/actions/workflows/ci.yml/badge.svg)](https://github.com/yermukhamed0777/pangaea/actions/workflows/ci.yml)
 
-**Know what you're buying.** An evidence-first shopping-intelligence prototype — not a
-marketing site, and not a verdict engine.
+**Know what you're buying.** An evidence-first shopping-intelligence prototype —
+not a marketing site, and not a verdict engine.
 
-Live (verified reachable 2026-11-25, HTTP 200): https://yermukhamed0777.github.io/pangaea/
+Live (last verified reachable 2026-11-25, HTTP 200):
+https://yermukhamed0777.github.io/pangaea/
+
+> The code in this working tree is newer than the published site. The local full
+> verification suite is green; deployment is a separate, gated step.
 
 ## What actually works
 
-- **Forensics workbench** (`/workbench`) — paste reviews, get an evidence ledger.
-  Seven deterministic checks are implemented in `src/lib/engine.ts:84`: timing bursts,
-  near-duplicate text, five-star skew, author concentration, missing verification,
-  low-substance text, and rating/text mismatch. The synthetic demo dataset currently
-  fires six of the seven (`src/lib/sample.ts:9`).
-- **Every signal shows the benign explanation beside the concerning one**
-  (`src/lib/engine.ts:106-108`). The tool never says a review is fake or real. The
-  reasoning is in [`RESEARCH_BRIEF.md`](RESEARCH_BRIEF.md).
-- **Adjusted average** with the excluded review IDs visible; it is an estimate, not a
-  truth score (`src/lib/engine.ts:226-233`).
+- **Forensics workbench** (`/workbench`) — paste reviews, load a CSV/JSON file, or
+  use the synthetic demo, then get an evidence ledger. Seven deterministic checks
+  are implemented in `src/lib/engine.ts`: timing bursts, near-duplicate text,
+  five-star skew, author concentration, missing verification, low-substance text
+  and rating/text mismatch. The demo fires six of the seven.
+- **Every signal shows the benign explanation beside the concerning one.** The
+  tool never says a review is fake or real. The reasoning is in
+  [`RESEARCH_BRIEF.md`](RESEARCH_BRIEF.md).
+- **Adjusted average with a reproducible exclusion list** — `excludedIds` is
+  exported, so the figure can be recomputed from a report. It is an estimate, not
+  a truth score.
 - **Landed-cost calculator** — price, units, shipping, duty and VAT across three
-  user-entered offers, sorted by cost per unit (`src/lib/cost.ts:15`).
-- **Export report** — downloadable JSON with the full analysis and methodology
-  (`src/app/workbench/page.tsx:38`).
+  user-entered offers, sorted by cost per unit. No external tax lookup and no
+  automatic cross-shop matching.
+- **Export report** — downloadable JSON with the full analysis, methodology and
+  excluded IDs (`src/app/workbench/page.tsx`).
+- **Local-only event counts** — five allowlisted event names, no text, no
+  transmission (`src/lib/events.ts`).
 - **Zero network calls, zero accounts, zero API keys** in the browser build.
-  Everything runs locally.
+  Verified by `npm run check:offline` and a browser check.
 
-What is **not** implemented: sign-in, saved reports, marketplace importers, price
-history, seller verification, real customer data, theme-level sentiment summaries,
-and cross-shop product matching. Landing-page mockups, prototype figures and sample
-quotes are labelled illustrative; they are not engine output or verified testimonials.
+Measured on this machine (commands and results in `plan/progress.md`): 33/33
+tests pass; 8 synthetic eval cases with 0 mismatches; 5/5 browser checks; 5,000
+reviews analysed in 649.97 ms median over 20 runs; 2/2 build variants verified.
+
+**Not implemented:** sign-in, saved reports, marketplace importers, price history,
+seller verification, theme extraction, real customer data, and cross-shop product
+matching. Landing-page mockups, prototype figures and sample quotes are labelled
+illustrative; they are not engine output or verified testimonials. No usage,
+accuracy or revenue figure has been measured or claimed.
 
 ## Run locally
 
@@ -43,41 +56,74 @@ npm run dev
 
 Open `http://localhost:3000/pangaea/workbench`.
 
-`npm run build` produces a static `out/` export, served under `/pangaea/` because
-`next.config.ts:5` sets `basePath`. GitHub Pages uses that path automatically. `out/`
-is generated and ignored by git.
+## Deploy
+
+`npm run build` produces a static `out/` export. The default base path is
+`/pangaea` (`next.config.ts`), which GitHub Pages serves automatically.
+
+- `npm run build:subpath` — `/pangaea`, for GitHub Pages.
+- `npm run build:root` — `/`, for a root-hosted static server.
+- `npm run check:build-variants` — builds both and asserts the asset prefixes.
+
+Serve `out/` as static files; no server runtime is needed. In CI, `.github/workflows/ci.yml`
+runs the full suite and `.github/workflows/deploy.yml` deploys to Pages **only**
+after that suite is green, checking out the exact verified SHA.
+
+## Backup and restore
+
+There is no server-side user data: review text and offers stay in the browser tab
+and are never stored by PANGAEA. To keep a result, use **Export report** and save
+the JSON yourself.
+
+To restore the project itself: clone the repository, run `npm ci`, then
+`npm run build`. `out/` and `.next/` are generated and ignored by git; never edit
+them by hand. `npm run walkthrough` regenerates the deterministic fixtures in
+`docs/walkthrough/`.
 
 ## Verify
 
 ```
-npm run verify     # typecheck -> 12 tests -> benchmark -> static build
+npm run verify
 ```
 
-Individual scripts: `npm run typecheck`, `npm test`, `npm run bench`, `npm run build`.
-The benchmark reports numbers without a pass/fail threshold. Measured on this machine
-(2026-11-25): 5,000 reviews / 20 runs had a median of 8,240.58 ms; the duplicate scan
-is O(n²) and is tracked in `plan/backlog.md` as P0-6. The committed benchmark uses
-2,000 reviews / 10 runs to keep CI practical.
+That single command runs, in CI order: typecheck → lint (warnings denied) →
+33 unit tests → 8-case local eval → content-free event check → benchmark →
+static build → offline/privacy check → both basePath variants → browser e2e →
+deterministic walkthrough fixtures. A failure in any step stops the chain and, in
+CI, blocks deployment. The benchmark is report-only (no timing threshold).
+
+Individual scripts: `npm run typecheck`, `npm run lint`, `npm test`, `npm run eval`,
+`npm run check:events`, `npm run bench`, `npm run build`, `npm run check:offline`,
+`npm run check:build-variants`, `npm run test:e2e`, `npm run walkthrough`.
+For a video-ready capture, build first and run `CAPTURE=1 npm run test:e2e`.
+
+The browser e2e uses `playwright-core` with a locally installed Chrome (or Edge).
+Set `CHROME_PATH` to override the browser executable.
 
 ## Structure
 
 | Path | Purpose |
 |---|---|
-| `src/lib/engine.ts` | Analysis engine — pure functions, no dependencies |
+| `src/lib/engine.ts` | Analysis engine — pure functions, deterministic ISO dates |
+| `src/lib/imports.ts` | Pipe/CSV/JSON/plain-text parsing, all client-side |
 | `src/lib/cost.ts` | Landed-cost math |
-| `src/lib/sample.ts` | Clearly synthetic demo dataset for testing |
-| `src/lib/types.ts` | Shared types |
+| `src/lib/sample.ts` | Clearly synthetic demo dataset and offers |
+| `src/lib/events.ts` | Content-free, non-transmitted event counts |
 | `src/app/workbench/page.tsx` | The workbench UI |
 | `src/app/components/` | Landing page sections |
-| `tests/`, `scripts/bench.ts` | Node-native tests and deterministic benchmark |
-| `.github/workflows/ci.yml` | Tests -> benchmark -> build on push/PR |
-| `.github/workflows/deploy.yml` | Pages build + deploy on push to `main` |
-| `plan/` | Strategy, roadmap, backlog, append-only logs and update convention |
+| `tests/`, `tests/fixtures/` | Unit tests and the synthetic eval fixture |
+| `scripts/` | Benchmark, eval, offline/variant/event checks, e2e, walkthrough |
+| `docs/walkthrough/` | Deterministic fixtures and capture instructions |
+| `.github/workflows/` | Full-suite CI and gated Pages deployment |
+| `plan/` | Strategy, roadmap, backlog, decision/progress logs, pilot handoff |
 
 ## Planning and governance
 
 Start at [`plan/README.md`](plan/README.md) for the index and the binding update
-convention. Also see [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`SECURITY.md`](SECURITY.md).
+convention. [`plan/pilot-handoff.md`](plan/pilot-handoff.md) is the exact boundary:
+everything up to the human-only pilot is prepared; the pilot itself has not run.
+Also see [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md) and
+[`plan/cloud-boundary.md`](plan/cloud-boundary.md).
 
 ## Licence
 

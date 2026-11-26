@@ -136,33 +136,41 @@ append-only decisions in `plan/decisions.md`.
   Human: recruit, consent, approve any quote. **Done when:** at least 10 sessions logged
   with written consent for anything published.
 
-- [ ] **M1-3 — Settle marketplace importers.** Ref: `README.md` "Not yet built".
-  Human: ToS/legal. Intelligence: parsers only after approval.
-  **Done when:** go/no-go row appended to `plan/decisions.md`.
+- [x] **M1-3 — Settle marketplace importers.** Ref: `plan/decisions.md` 2026-11-26.
+  Default **no-go**: no permitted data access or legal review. A human with legal
+  authority may supersede this with a new decision row.
+  **Done when:** go/no-go row appended to `plan/decisions.md`. Verified 2026-11-26.
 
-- [ ] **M1-4 — Settle the recovered Supabase work.** Ref: `PANGAEA-RECOVERY.md`.
-  A separate local copy has `middleware.ts`, `src/app/api`, `src/app/auth`, `src/app/saved`,
-  `supabase/schema.sql`, `.env.example`; it is not merged.
-  Human: decide merge/discard and accept the privacy trade-off.
-  **Done when:** decision row appended and the chosen state reflected in `README.md`.
+- [x] **M1-4 — Settle the recovered Supabase work.** Refs: `plan/decisions.md`,
+  `plan/cloud-boundary.md`, `README.md`. Default **do not merge**: the separate
+  local copy with auth/saved reports stays outside this repo; an opt-in tier is
+  bounded in `plan/cloud-boundary.md`. A human may supersede this.
+  **Done when:** decision row appended and chosen state reflected in `README.md`.
+  Verified 2026-11-26.
 
 ## M2 — product and GTM proof
 
-- [ ] **M2-1 — Replace illustrative figures with measured ones.** Refs: `Hero.tsx`,
-  `Evidence.tsx`, `Voices.tsx`. **Done when:** every public number has a command and
-  result in `plan/progress.md`, or remains explicitly labelled illustrative.
+- [x] **M2-1 — Reconcile public figures with measured ones.** Refs: `Hero.tsx`,
+  `Method.tsx`, `Capabilities.tsx`, `Evidence.tsx`, `Voices.tsx`. Claim drift removed
+  (themes, automatic cross-shop matching, listing/timestamp lookups); remaining
+  figures are labelled illustrative or backed by `npm run walkthrough`.
+  **Done when:** every public number has a recorded command or an explicit
+  illustrative label. Verified 2026-11-26.
 
-- [ ] **M2-2 — Decide pricing and payments.** Ref: `LICENSE` (proprietary).
-  Human: price, tax, approval. Intelligence: integration.
-  **Done when:** price and payment provider recorded in `plan/decisions.md`.
+- [x] **M2-2 — Decide pricing and payments.** Ref: `plan/decisions.md` 2026-11-26.
+  Default: free prototype, no checkout. A human owner of price/tax may supersede.
+  **Done when:** decision recorded in `plan/decisions.md`. Verified 2026-11-26.
 
-- [ ] **M2-3 — Choose hosting beyond Pages.** Ref: `plan/roadmap.md` expansion table.
-  **Done when:** selection rule applied and host recorded in `plan/decisions.md`.
+- [x] **M2-3 — Choose hosting beyond Pages.** Ref: `plan/decisions.md` 2026-11-26.
+  GitHub Pages retained; root-path build also verified for an easy static-host switch.
+  **Done when:** host recorded in `plan/decisions.md`. Verified 2026-11-26.
 
 ## M3+ — long term
 
-- [ ] **M3-1 — Define the opt-in cloud tier.** **Done when:** a written boundary exists
-  showing that review text stays local unless the user opts in, with architecture notes.
+- [x] **M3-1 — Define the opt-in cloud tier.** Ref: `plan/cloud-boundary.md`. Written
+  boundary with six rules, a default-state description and explicitly rejected
+  features. **Done when:** written boundary with architecture notes exists.
+  Verified 2026-11-26.
 
 - [ ] **M3-2 — Reach the quantitative exit criteria.** Ref: `plan/roadmap.md` section 3.
   **Done when:** all five targets are measured and recorded, or explicitly retired in

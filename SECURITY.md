@@ -8,6 +8,13 @@ workbench stays in the page; `URL.createObjectURL` is used only to download a re
 to the same device. The generated static export makes no network requests for user
 data (fonts are fetched at build time by `next/font/google`, not at runtime).
 
+The optional event harness (`src/lib/events.ts`) keeps only allowlisted names and
+numeric counts in memory; it stores no text, account or journal content and sends
+nothing. `npm run check:events` rejects hostile payloads and
+`npm run check:offline` fails on runtime network primitives or external asset
+hosts. See `plan/cloud-boundary.md` for the boundary any future hosted tier must
+respect, and `plan/pilot-handoff.md` for consent requirements.
+
 ## Reporting a vulnerability
 
 Open a GitHub issue or contact the repository owner privately with:
@@ -26,6 +33,6 @@ not be used as one.
 
 ## Repository hygiene
 
-`.gitignore` excludes `out/`, `.next/`, `node_modules/`, `*.tsbuildinfo` and `.env*`
-(except `.env.example`). No secret values or credential locations belong in tracked
-files. See `plan/README.md` for the update convention.
+`.gitignore` excludes `out/`, `.next/`, `.build-check/`, `node_modules/`,
+`*.tsbuildinfo` and `.env*` (except `.env.example`). No secret values or credential
+locations belong in tracked files. See `plan/README.md` for the update convention.

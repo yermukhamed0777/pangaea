@@ -12,6 +12,8 @@ ordered executable IDs; `decisions.md` and `progress.md` are append-only.
 | [`decisions.md`](decisions.md) | Append-only decision log: date, decision, why. Never rewrite old rows. |
 | [`progress.md`](progress.md) | Append-only session log: exact changes, exact commands and results, open items mapped to backlog IDs. Research-only sessions get an entry too. |
 | [`README.md`](README.md) | This index and the binding convention below. |
+| [`pilot-handoff.md`](pilot-handoff.md) | Human-only boundary: seven-day pilot, consent wording, collection, go/no-go. |
+| [`cloud-boundary.md`](cloud-boundary.md) | Architecture boundary for any future opt-in hosted tier. |
 
 ## Binding update convention
 

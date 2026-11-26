@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 const features = [
   {
     tag: "Signal",
-    title: "Sentiment, decoded",
-    text: "Not positive or negative — specific. PANGAEA tells you that 60 people loved the texture and 22 hated the cap.",
+    title: "Substance, measured",
+    text: "Not just positive or negative — specific. The workbench scores concrete detail, measurements and first-hand language instead of trusting a star average.",
     visual: (
       <div className="space-y-2">
         {[
@@ -30,6 +30,7 @@ const features = [
         ))}
       </div>
     ),
+    caption: "illustrative bar values · not engine output",
   },
   {
     tag: "Integrity",
@@ -49,11 +50,12 @@ const features = [
         ))}
       </div>
     ),
+    caption: "illustrative histogram · not engine output",
   },
   {
     tag: "Economics",
     title: "The price, unpacked",
-    text: "Shipping, duties, bundles and subscription traps folded into one honest number. Then matched across shops.",
+    text: "Shipping, duty and VAT folded into one landed cost per unit. You enter the rates and the offers; nothing is looked up or matched automatically.",
     visual: (
       <div className="space-y-2 font-mono text-[11px]">
         {[
@@ -69,11 +71,12 @@ const features = [
         ))}
       </div>
     ),
+    caption: "illustrative figures · not a live quote",
   },
   {
     tag: "Proof",
-    title: "Every claim, sourced",
-    text: "Tap any conclusion and land on the exact review, timestamp, or listing that produced it. No vague scores.",
+    title: "Every signal, auditable",
+    text: "Each observation shows the review IDs behind it and the benign explanation beside the concern. No verdicts, no listing lookups.",
     visual: (
       <div className="space-y-2 font-mono text-[10px]">
         <div className="flex items-center gap-2 border border-ink p-2">
@@ -86,6 +89,7 @@ const features = [
         </div>
       </div>
     ),
+    caption: "illustrative labels · the workbench shows real review IDs",
   },
 ];
 
@@ -117,6 +121,7 @@ export default function Capabilities() {
               <h3 className="mt-7 font-serif text-[32px] leading-tight sm:text-[38px]">{f.title}</h3>
               <p className="mt-4 max-w-md text-[14px] leading-relaxed text-muted">{f.text}</p>
               <div className="mt-10 border-t-2 border-ink pt-6">{f.visual}</div>
+              <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.1em] text-muted">{f.caption}</p>
             </motion.article>
           ))}
         </div>

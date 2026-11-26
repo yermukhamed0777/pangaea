@@ -4,6 +4,22 @@ All notable changes are recorded here. Dates are in UTC where known; otherwise t
 local date is used. The first entry records the baseline state and this session's
 changes; earlier history was not available locally and is not invented.
 
+## 2026-11-26 — CV-ready finish
+
+### Added
+- `plan/pilot-handoff.md` (human-only seven-day pilot: consent wording, cohort,
+  schedule, collection, failure filing, go/no-go) and `plan/cloud-boundary.md`.
+- `docs/walkthrough/README.md` with deterministic regeneration and screenshot capture.
+
+### Changed
+- `README.md`: accurate install, run, deploy, backup/restore and verify sections.
+- Landing-page copy reconciled with code: no theme extraction, automatic
+  cross-shop matching or listing/timestamp lookup claims; remaining numbers are
+  measured or explicitly labelled illustrative (M2-1).
+- `CONTRIBUTING.md`, `SECURITY.md`, `THIRD_PARTY_NOTICES.md` updated.
+- Recorded agent defaults: importers no-go, Supabase work separate, free prototype,
+  GitHub Pages hosting, opt-in cloud boundary.
+
 ## 2026-11-26 — verification matrix
 
 ### Added

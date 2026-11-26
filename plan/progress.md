@@ -223,3 +223,34 @@ human-only; this harness is not real-world validation.
 **Open items mapped:** M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
 V1…V7 are closed. Next action: CV-ready copy/docs and agent-decidable product
 decisions (M1-3, M1-4, M2-2, M2-3, M3-1).
+
+## 2026-11-26 — S8: CV-ready finish and agent-decidable decisions
+
+**Changed:** `README.md` (rewritten: install/run/deploy/backup-restore/verify),
+`src/app/components/{Hero,Method,Capabilities,Evidence}.tsx` (claim drift removed,
+illustrative captions), `plan/cloud-boundary.md` (new), `plan/pilot-handoff.md`
+(new), `docs/walkthrough/README.md` (new), `CONTRIBUTING.md`, `SECURITY.md`,
+`THIRD_PARTY_NOTICES.md` (dev-dependency licences), `plan/backlog.md`,
+`plan/decisions.md`, `plan/progress.md`.
+
+**Exact changes:** Removed claims about theme extraction, automatic cross-shop
+matching and listing/timestamp lookups. Public figures are either backed by
+`npm run walkthrough` / `npm run eval` or explicitly labelled illustrative.
+Recorded agent defaults: importers no-go (M1-3), Supabase work stays separate
+(M1-4), free prototype with no payments (M2-2), GitHub Pages retained (M2-3),
+and the opt-in cloud boundary (M3-1). `plan/pilot-handoff.md` is the human-only
+boundary: consent wording, five-person fixed cohort, seven-day schedule, three
+tasks, content-free collection, failure filing and go/no-go criteria.
+
+**Commands and results (exact), after all copy/doc changes:**
+- `npm.cmd run verify` → typecheck clean; lint clean; `tests 33 / pass 33 / fail 0`;
+  `eval: 8 synthetic cases, 0 mismatches`;
+  `PASS events: 5 allowlisted names, 6 counts, 0 content fields`;
+  `engine bench: 2000 reviews, 10 runs, median 114.57 ms, 8.7 analyses/s, signals 3`;
+  build 3 static routes; `offline: scanned 18 source files, 4 HTML files,
+  0 external refs`; `build-variants: 2/2 variants verified`; 5/5 e2e checks;
+  walkthrough fixtures written.
+
+**Open items mapped:** M1-1, M1-2, M3-2 only (plus push/publish confirmation).
+M1-3, M1-4, M2-1, M2-2, M2-3 and M3-1 are closed with recorded defaults that a
+human may supersede. Next action: handoff and push confirmation.

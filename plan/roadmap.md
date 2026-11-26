@@ -5,10 +5,11 @@ Every item is split into **Intelligence** (what the assistant can do) and **Huma
 Numbers described as targets are proposals, not measurements. See `plan/strategy.md`
 for the measured baseline and `plan/backlog.md` for IDs.
 
-Status (2026-11-26): all short-term items (P0-2, P0-6…P0-10, P1-1, P1-2) and the
-verification matrix (V1…V7) are complete and verified locally. CI runs the same
-suite and gates Pages on it. Remaining agent work: CV-ready copy/docs and the
-agent-decidable product decisions; human gates remain at M1/M2/M3.
+Status (2026-11-26): all agent-executable items are complete: short term
+(P0-2, P0-6…P0-10, P1-1, P1-2), verification (V1…V7), CV-ready docs, and the
+agent-decidable defaults in M1-3, M1-4, M2-1…M2-3 and M3-1. Only M1-1, M1-2 and
+M3-2 remain human-only; see `plan/pilot-handoff.md`. Push/publish is withheld
+pending explicit confirmation.
 
 ## 1. Short term — concrete next steps
 

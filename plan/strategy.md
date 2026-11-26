@@ -8,7 +8,8 @@ Tests: **33/33 pass**; eval harness **8/8 synthetic cases, 0 mismatches**.
 `npm run verify` (typecheck → lint → tests → eval → events → bench → build →
 offline → both basePath variants → browser e2e → walkthrough) is green locally.
 CI runs the same command; Pages deploys only on a green CI run.
-Next action: CV-ready copy/docs and agent-decidable product decisions.
+Next action: handoff to the human pilot owner; push is withheld pending
+confirmation. Only M1-1, M1-2 and M3-2 remain genuinely human-only.
 
 ## Market and thesis
 
@@ -58,8 +59,8 @@ Measured now (commands and results are in `plan/progress.md`):
 | Lint | clean, warnings denied | `npm run lint` |
 | Local eval | 8 synthetic cases, 0 mismatches | `npm run eval` |
 | Event harness | 5 allowlisted names, 0 content fields | `npm run check:events` |
-| Benchmark (CI setting) | 122.34 ms median, 2,000 reviews, 10 runs | `npm run bench` |
 | Browser e2e | 5 checks pass, 0 external requests | `npm run test:e2e` |
+| Benchmark (CI setting) | 114.57 ms median, 2,000 reviews, 10 runs | `npm run bench` |
 | Offline | 18 source files, 4 HTML files, 0 external refs | `npm run check:offline` |
 | Build variants | 2/2 (`/` and `/pangaea`) | `npm run check:build-variants` |
 | Typecheck | clean | `npm run typecheck` |
@@ -113,3 +114,4 @@ a future network-sniffing test).
 | S5 | 2026-11-26 | CSV/JSON/plain-text import and local file picker in the workbench | `npm.cmd run typecheck`, `npm.cmd test` | typecheck clean; 22/22 tests pass; P1-1 closed. |
 | S6 | 2026-11-26 | Local synthetic eval harness with per-signal counts | `npm.cmd run eval`, `npm.cmd test` | 8 cases / 0 mismatches; 31/31 tests pass; P1-2 closed. Not real-world validation. |
 | S7 | 2026-11-26 | Verification matrix: lint, offline check, both basePath builds, browser e2e, content-free events, walkthrough fixtures, CI full suite and gated deploy | `npm.cmd ci`, `npm.cmd run verify` | clean install; 33/33 tests; 8/8 eval; 5/5 e2e; 2/2 build variants; 0 external refs; V1…V7 closed. |
+| S8 | 2026-11-26 | CV-ready README/docs, landing-page claim reconciliation, pilot handoff, cloud boundary and agent product defaults | `npm.cmd run verify` | full suite green; only M1-1, M1-2 and M3-2 remain human-only. |

@@ -14,7 +14,7 @@ export default function Evidence() {
     <section id="evidence" className="container-edge py-24 sm:py-28">
       <p className="eyebrow">04 / Illustrative prototype figures</p>
       <h2 className="mt-4 max-w-3xl font-serif text-[46px] leading-[1.02] sm:text-[62px]">
-        Small team. Unreasonable amount of reading.
+        A small project. A strict evidence standard.
       </h2>
 
       <div className="mt-14 grid grid-cols-2 gap-px border-2 border-ink bg-line lg:grid-cols-4">
@@ -39,8 +39,9 @@ export default function Evidence() {
       <div className="mt-10 flex flex-col gap-4 border-l-4 border-acid bg-acid/15 p-6 sm:flex-row sm:items-center sm:gap-8">
         <span className="font-mono text-[10px] uppercase tracking-[0.16em]">Note from us</span>
         <p className="text-[14px] leading-relaxed">
-          These are demo figures from the prototype dataset. PANGAEA is in private testing —
-          we publish real numbers only once the sample is large enough to mean something.
+          Three of these figures are illustrative placeholders; the `20` is the count of
+          hand-written synthetic reviews in `src/lib/sample.ts`. No usage figure is measured
+          or published. Validation criteria are in `plan/pilot-handoff.md`.
         </p>
       </div>
     </section>
