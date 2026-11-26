@@ -5,11 +5,12 @@
 **Know what you're buying.** An evidence-first shopping-intelligence prototype —
 not a marketing site, and not a verdict engine.
 
-Live (last verified reachable 2026-11-25, HTTP 200):
+Live (verified reachable 2026-11-26, HTTP 200, length 52115):
 https://yermukhamed0777.github.io/pangaea/
 
-> The code in this working tree is newer than the published site. The local full
-> verification suite is green; deployment is a separate, gated step.
+> The published build matches the current `main` HEAD (`129f4ed`). CI run
+> `45752257398` and the gated Pages run `45752366645` both succeeded; exact
+> results are in `plan/progress.md`.
 
 ## What actually works
 

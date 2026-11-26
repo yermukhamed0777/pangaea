@@ -1,8 +1,10 @@
 # PANGAEA — strategy
 
 Status snapshot (2026-11-26): **stage = prototype / pre-validation, published and CI-verified**.
-Last pushed HEAD was `75cc131` (CI/deploy verified 2026-11-25); local work since then is
-unpushed. The duplicate scan no longer dominates: measured benchmark is **649.97 ms**
+Local and remote HEAD are both `129f4ed85117f80e752a11711303dd7c5632b71b`; CI run
+`45752257398` and gated Pages run `45752366645` both succeeded, and the live page
+served the new copy (HTTP 200, length 52115). The duplicate scan no longer dominates:
+measured benchmark is **649.97 ms**
 median for 5,000 reviews / 20 runs (was 8,240.58 ms), so the P0-6 target is met.
 Tests: **33/33 pass**; eval harness **8/8 synthetic cases, 0 mismatches**.
 `npm run verify` (typecheck → lint → tests → eval → events → bench → build →
@@ -68,7 +70,7 @@ Measured now (commands and results are in `plan/progress.md`):
 | Demo signals fired | 6 of 7 possible | `analyze(demoReviews())` |
 | Demo average / adjusted | 4.4 / 4.18 (9 excluded IDs) | `analyze(demoReviews())` |
 | Engine benchmark | 649.97 ms median, 5,000 reviews, 20 runs | `scripts/bench.ts` |
-| Published site | HTTP 200 (as of 2026-11-25) | `Invoke-WebRequest` to Pages URL |
+| Published site | HTTP 200, length 52115 (2026-11-26) | `Invoke-WebRequest` to Pages URL |
 
 Proposed targets (**not measured — decisions, not facts**): p95 under 2 s for 1,000
 reviews; at least 10 consenting user sessions before publishing any real number.
@@ -121,3 +123,4 @@ the browser request assertion in `npm run test:e2e`, not merely proposed.
 | S6 | 2026-11-26 | Local synthetic eval harness with per-signal counts | `npm.cmd run eval`, `npm.cmd test` | 8 cases / 0 mismatches; 31/31 tests pass; P1-2 closed. Not real-world validation. |
 | S7 | 2026-11-26 | Verification matrix: lint, offline check, both basePath builds, browser e2e, content-free events, walkthrough fixtures, CI full suite and gated deploy | `npm.cmd ci`, `npm.cmd run verify` | clean install; 33/33 tests; 8/8 eval; 5/5 e2e; 2/2 build variants; 0 external refs; V1…V7 closed. |
 | S8 | 2026-11-26 | CV-ready README/docs, landing-page claim reconciliation, pilot handoff, cloud boundary and agent product defaults | `npm.cmd run verify` | full suite green; only M1-1, M1-2 and M3-2 remain human-only. |
+| S10 | 2026-11-26 | Confirmed push, CI verification and gated Pages deployment | `git push`, `gh run watch 45752257398`, `gh run watch 45752366645`, `Invoke-WebRequest` | CI success in 1m3s; gated deploy success in 27s+14s; live page HTTP 200 with new copy. |

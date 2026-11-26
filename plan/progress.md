@@ -279,3 +279,37 @@ to recorded defaults, proposed targets distinguished from enforced checks),
 
 **Open items mapped:** M1-1, M1-2, M3-2 and push/publish confirmation only.
 No known agent-doable defect remains open.
+
+## 2026-11-26 — S10: confirmed push, CI and gated deployment
+
+User explicitly confirmed the push after the final report of consequences.
+
+**Changed:** `plan/progress.md` (this entry), `plan/strategy.md` (status snapshot
+and published-site metric), `README.md` (published build now matches `main`).
+No source code changed.
+
+**Commands and results (exact):**
+- `git push origin main` → `75cc131..129f4ed  main -> main`. A local git
+  credential-helper path warning was printed but the push succeeded.
+- `git ls-remote origin refs/heads/main` → `129f4ed85117f80e752a11711303dd7c5632b71b`;
+  `git rev-parse HEAD` → the same SHA.
+- `gh run list --repo yermukhamed0777/pangaea --limit 6 --json ...` →
+  Verify PANGAEA run `45752257398`, event `push`, head SHA `129f4ed…`,
+  status `in_progress` at first observation.
+- `gh run watch 45752257398 --exit-status --interval 10` → exit 0,
+  `verify in 1m3s`, all steps green (`npm ci`, `npm run verify`). Annotation only:
+  GitHub Actions forces Node-20-targeted actions to run on Node 24.
+- `gh run list --limit 3` → Deploy PANGAEA to GitHub Pages run `45752366645`,
+  event `workflow_run`, head SHA `129f4ed…`, `in_progress`. The gate worked:
+  deployment started only after CI succeeded.
+- `gh run watch 45752366645 --exit-status --interval 10` → exit 0;
+  `build in 27s` and `deploy in 14s`; annotation only (Node 20 action deprecation).
+- `Invoke-WebRequest https://yermukhamed0777.github.io/pangaea/ -UseBasicParsing`
+  → status `200`, length `52115`; matches: `Illustrative mockup` 1,
+  `Composite example` 3, `Evidence, not verdicts.` 1, `Do not buy` 0,
+  `illustrative figure` 2, `illustrative score` 0, `Substance, measured` 1,
+  `Every signal, auditable` 1, `theme` 0.
+
+**Open items mapped:** M1-1, M1-2, M3-2 only. Push, CI and deployment are complete;
+the publication boundary is closed. This log commit uses `[skip ci]` so it does
+not trigger a redundant verify/deploy cycle.
