@@ -4,6 +4,15 @@ All notable changes are recorded here. Dates are in UTC where known; otherwise t
 local date is used. The first entry records the baseline state and this session's
 changes; earlier history was not available locally and is not invented.
 
+## 2026-11-26 — CSV/JSON import
+
+### Added
+- `src/lib/imports.ts`: `parseReviews` accepts pipe, CSV (optional header, quoted
+  fields), JSON (array or `reviews` wrapper) and plain text, with parse errors
+  returned rather than thrown (P1-1).
+- Workbench local file picker, detected-format label and parse-error alert.
+- Six import tests (22/22 total); CSV and JSON match equivalent pipe input.
+
 ## 2026-11-26 — engine correctness
 
 ### Changed

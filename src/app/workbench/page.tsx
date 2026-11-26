@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Download, FlaskConical, Info, Play, Trash2 } from "lucide-react";
-import { analyze, reviewsFromText } from "../../lib/engine";
+import { analyze } from "../../lib/engine";
+import { parseReviews, type ImportFormat } from "../../lib/imports";
 import { compareOffers, savingPercent } from "../../lib/cost";
 import { demoReviews, demoText } from "../../lib/sample";
 import type { Offer } from "../../lib/types";
@@ -17,6 +18,8 @@ const INITIAL_OFFERS: Offer[] = [
 export default function Workbench() {
   const [text, setText] = useState("");
   const [ran, setRan] = useState(false);
+  const [format, setFormat] = useState<ImportFormat>("pipe");
+  const [error, setError] = useState<string | null>(null);
   const [analysis, setAnalysis] = useState(() => analyze(demoReviews()));
   const [offers, setOffers] = useState<Offer[]>(INITIAL_OFFERS);
   const [openSignal, setOpenSignal] = useState<string | null>("timing-burst");
@@ -25,9 +28,12 @@ export default function Workbench() {
   const saving = useMemo(() => savingPercent(costs), [costs]);
 
   function run(input = text) {
-    const reviews = input.trim() ? reviewsFromText(input) : demoReviews();
+    const parsed = parseReviews(input);
+    setFormat(parsed.format);
+    setError(parsed.error);
+    const reviews = parsed.reviews.length ? parsed.reviews : demoReviews();
     setAnalysis(analyze(reviews));
-    setRan(true);
+    setRan(!parsed.error);
   }
 
   function loadDemo() {
@@ -92,7 +98,7 @@ export default function Workbench() {
             <div className="border-2 border-ink bg-paper">
               <div className="flex items-center justify-between border-b-2 border-ink px-5 py-3">
                 <span className="font-mono text-[10px] uppercase tracking-[0.16em]">01 · Review data</span>
-                <span className="font-mono text-[9px] text-muted">local only</span>
+                <span className="font-mono text-[9px] text-muted">{format} · local only</span>
               </div>
               <div className="p-5">
                 <label htmlFor="reviews" className="eyebrow">One review per line</label>
@@ -105,9 +111,32 @@ export default function Workbench() {
                   className="mt-3 w-full resize-y border border-line bg-white/40 p-3 font-mono text-[11px] leading-relaxed outline-none focus:border-ink"
                 />
                 <p className="mt-2 font-mono text-[9px] leading-relaxed text-muted">
-                  Format: rating | date | author | text. Rating, date and author are optional — plain lines work too,
-                  but fewer signals will be available.
+                  Formats: <code>rating | date | author | text</code>, CSV (rating,date,author,text,verified),
+                  JSON (<code>[ ... ]</code>) or plain text. Metadata is optional; fewer signals are then available.
                 </p>
+                <div className="mt-4">
+                  <label htmlFor="review-file" className="eyebrow">Or load a local file</label>
+                  <input
+                    id="review-file"
+                    type="file"
+                    accept=".csv,.json,.txt,text/csv,application/json,text/plain"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const content = await file.text();
+                      setText(content);
+                      run(content);
+                      e.target.value = "";
+                    }}
+                    className="mt-2 block w-full font-mono text-[10px] text-muted file:border file:border-ink file:bg-paper file:px-3 file:py-1.5 file:font-mono file:text-[10px] file:uppercase file:tracking-[0.1em] file:text-ink"
+                  />
+                  <p className="mt-1 font-mono text-[9px] text-muted">Read in your browser only — never uploaded.</p>
+                </div>
+                {error && (
+                  <p role="alert" className="mt-3 border-l-2 border-coral pl-3 font-mono text-[10px] leading-relaxed text-coral">
+                    {error}
+                  </p>
+                )}
                 <div className="mt-5 flex flex-wrap gap-3">
                   <button onClick={() => run()} className="btn-solid !px-5 !py-3">
                     <Play size={14} /> Analyze

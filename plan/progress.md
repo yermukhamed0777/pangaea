@@ -140,3 +140,23 @@ M3-1, M3-2. P0-2 and P0-10 are now closed. Next action: P0-6 (remove the O(n²) 
 
 **Open items mapped:** P1-1, P1-2, M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
 P0-6, P0-7, P0-8 and P0-9 are closed. Next action: P1-1 (CSV/JSON import).
+
+## 2026-11-26 — S5: CSV/JSON import (P1-1)
+
+**Changed:** `src/lib/imports.ts` (new), `src/app/workbench/page.tsx`,
+`tests/imports.test.ts` (new), `plan/backlog.md`, `plan/progress.md`.
+
+**Exact changes:** `parseReviews` detects pipe/CSV/JSON/plain text; CSV supports an
+optional header and quoted commas/quotes/newlines; JSON accepts an array or a
+`reviews` wrapper and reports parse/shape errors without throwing. Workbench gains a
+local file input (`.csv`, `.json`, `.txt`), a live format label and an error alert.
+
+**Commands and results (exact):**
+- `npm.cmd run typecheck` → exit 0, no output.
+- `npm.cmd test` → `tests 22 / pass 22 / fail 0` in 154.02 ms.
+- Two initially failing tests were fixed, not hidden: the first comparison wrongly
+  included `verified` (pipe format has no such column); the parser used an extensionless
+  runtime import, which Node's native TS loader rejected — changed to `./engine.ts`.
+
+**Open items mapped:** P1-2, M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
+P1-1 is closed. Next action: P1-2 (local eval harness).

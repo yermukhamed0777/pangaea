@@ -74,10 +74,12 @@ append-only decisions in `plan/decisions.md`.
 
 ## P1 — next
 
-- [ ] **P1-1 — Add CSV/JSON import.** Ref: `src/lib/engine.ts:65-82`, `src/app/workbench/page.tsx:99-106`.
-  The research brief lists paste or upload; only paste exists.
-  **Done when:** a CSV and a JSON sample load into the workbench and match equivalent
-  pasted text, with tests.
+- [x] **P1-1 — Add CSV/JSON import.** Refs: `src/lib/imports.ts`,
+  `src/app/workbench/page.tsx`. `parseReviews` accepts pipe, CSV (with optional
+  header/RFC-4180 quoting), JSON (array or `{reviews:[...]}`) and plain text;
+  the workbench has a local file picker, format label and parse-error display.
+  **Done when:** CSV/JSON samples match equivalent pipe input with tests.
+  22/22 tests pass. Verified 2026-11-26.
 
 - [ ] **P1-2 — Build a local eval harness.** Refs: `tests/`, `scripts/bench.ts`,
   `RESEARCH_BRIEF.md:19-33`. No labelled data or per-signal metrics exist.

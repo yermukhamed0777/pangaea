@@ -4,7 +4,7 @@ Status snapshot (2026-11-26): **stage = prototype / pre-validation, published an
 Last pushed HEAD was `75cc131` (CI/deploy verified 2026-11-25); local work since then is
 unpushed. The duplicate scan no longer dominates: measured benchmark is **649.97 ms**
 median for 5,000 reviews / 20 runs (was 8,240.58 ms), so the P0-6 target is met.
-Tests: **16/16 pass**. Next action: P1-1 — CSV/JSON import.
+Tests: **22/22 pass**. Next action: P1-2 — local eval harness.
 
 ## Market and thesis
 
@@ -50,7 +50,7 @@ Measured now (commands and results are in `plan/progress.md`):
 
 | Metric | Value | Source |
 |---|---|---|
-| Tests passing | 16/16 | `npm test` |
+| Tests passing | 22/22 | `npm test` |
 | Typecheck | clean | `npm run typecheck` |
 | Static routes | `/`, `/workbench`, `/_not-found` | `npm run build` |
 | Demo signals fired | 6 of 7 possible | `analyze(demoReviews())` |
@@ -99,3 +99,4 @@ a future network-sniffing test).
 | S2 | 2026-11-25 | Phase 2/3 implementation: verification harness, engine wording fix, claim reconciliation, scrubbed recovery notes, restored research brief, public-repo scaffolding, CI, and `plan/` | `npm.cmd run verify` | typecheck clean, 12/12 tests pass, benchmark and build pass; see `plan/progress.md` for exact numbers. |
 | S3 | 2026-11-25 | Phase 5 push: untracked generated `out/`, committed `ad5a773`, pushed to existing public repo, closed P0-2/P0-10 in the plan | `git ls-remote`, `gh run watch 45626579139`, `gh run watch 45626579090`, `Invoke-WebRequest` | remote HEAD equals local; CI success in 39 s; Pages success; live page relabelled. |
 | S4 | 2026-11-26 | Engine correctness: fast exact duplicate detection, strict dates, reproducible exclusions, removed `score` | `npm.cmd test`, `npm.cmd run bench` at 5,000/20 | 16/16 tests pass; median 649.97 ms; demo signal list unchanged; P0-6…P0-9 closed. |
+| S5 | 2026-11-26 | CSV/JSON/plain-text import and local file picker in the workbench | `npm.cmd run typecheck`, `npm.cmd test` | typecheck clean; 22/22 tests pass; P1-1 closed. |
