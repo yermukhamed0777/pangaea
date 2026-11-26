@@ -81,9 +81,13 @@ append-only decisions in `plan/decisions.md`.
   **Done when:** CSV/JSON samples match equivalent pipe input with tests.
   22/22 tests pass. Verified 2026-11-26.
 
-- [ ] **P1-2 — Build a local eval harness.** Refs: `tests/`, `scripts/bench.ts`,
-  `RESEARCH_BRIEF.md:19-33`. No labelled data or per-signal metrics exist.
-  **Done when:** a command reports per-signal counts on a committed, licensed fixture.
+- [x] **P1-2 — Build a local eval harness.** Refs: `tests/fixtures/eval-cases.ts`,
+  `scripts/eval.ts`, `tests/eval.test.ts`. Eight hand-written SYNTHETIC cases (no
+  third-party licence) with expected signal keys; `npm run eval` prints per-signal
+  TP/FP/FN counts and fails on any mismatch. This is threshold regression, not
+  real-world validation (M1-1 remains a human gate).
+  **Done when:** a command reports per-signal counts on a committed fixture.
+  Verified 2026-11-26: 8 cases, 0 mismatches.
 
 ## M1 — validation (human gates)
 

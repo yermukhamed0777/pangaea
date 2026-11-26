@@ -160,3 +160,28 @@ local file input (`.csv`, `.json`, `.txt`), a live format label and an error ale
 
 **Open items mapped:** P1-2, M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
 P1-1 is closed. Next action: P1-2 (local eval harness).
+
+## 2026-11-26 — S6: local eval harness (P1-2)
+
+**Changed:** `tests/fixtures/eval-cases.ts` (new, synthetic), `scripts/eval.ts` (new),
+`tests/eval.test.ts` (new), `package.json` (`eval` script, `verify` includes eval),
+`plan/backlog.md`, `plan/progress.md`.
+
+**Exact changes:** eight labelled synthetic cases cover empty input, five-star skew,
+author concentration, timing burst, unverified cluster, low substance, rating/text
+mismatch and duplicate text. `npm run eval` prints a per-signal tp/fp/fn table and
+sets a non-zero exit code on any mismatch. No real data or third-party licence is involved.
+
+**Commands and results (exact):**
+- `npm.cmd run eval` → `eval: 8 synthetic cases, 0 mismatches`; every case PASS;
+  per-signal counts: identity-concentration 1/0/0, rating-five-heavy 1/0/0,
+  rating-text-mismatch 1/0/0, text-duplicates 2/0/0, text-low-substance 1/0/0,
+  timing-burst 1/0/0, verification-low 1/0/0 (tp/fp/fn).
+- `npm.cmd test` → `tests 31 / pass 31 / fail 0` in 171.84 ms.
+- One fixture initially failed (timing burst): eight reviews inside seven days gave
+  `expected = peak`, so the ratio could not exceed 2.2. Moved one review to a later
+  month to widen the span; the case now passes without changing engine thresholds.
+
+**Open items mapped:** M1-1 … M1-4, M2-1 … M2-3, M3-1, M3-2.
+P1-2 is closed. Note: M1-1 (licensed real dataset) and M1-2 (consented users) remain
+human-only; this harness is not real-world validation.

@@ -4,6 +4,17 @@ All notable changes are recorded here. Dates are in UTC where known; otherwise t
 local date is used. The first entry records the baseline state and this session's
 changes; earlier history was not available locally and is not invented.
 
+## 2026-11-26 — local eval harness
+
+### Added
+- `tests/fixtures/eval-cases.ts`: eight hand-written, clearly synthetic labelled
+  cases (no third-party licence) covering every signal family.
+- `scripts/eval.ts` / `npm run eval`: per-signal tp/fp/fn counts with a non-zero
+  exit code on any mismatch; `npm run verify` now includes it (P1-2).
+- `tests/eval.test.ts`: 9 tests, 31/31 total.
+
+This is threshold regression, not real-world validation.
+
 ## 2026-11-26 — CSV/JSON import
 
 ### Added
