@@ -254,3 +254,28 @@ tasks, content-free collection, failure filing and go/no-go criteria.
 **Open items mapped:** M1-1, M1-2, M3-2 only (plus push/publish confirmation).
 M1-3, M1-4, M2-1, M2-2, M2-3 and M3-1 are closed with recorded defaults that a
 human may supersede. Next action: handoff and push confirmation.
+
+## 2026-11-26 — S9: final audit
+
+**Changed:** `plan/strategy.md` (risks marked mitigated/resolved, open questions tied
+to recorded defaults, proposed targets distinguished from enforced checks),
+`src/app/components/Hero.tsx` (mockup label "illustrative figure" instead of
+"illustrative score", to avoid implying an engine score exists).
+
+**Commands and results (exact):**
+- Grep over `src/**/*.{ts,tsx}` for `score`, `Date.parse`, the retired marketing
+  phrases and claim-drift words → only explanatory comments, the word "score" in
+  a workbench disclaimer, and the explicitly labelled Hero mockup remained.
+- Secrets grep over tracked text files for `sk-`, `service_role`, private-key
+  headers, `password=`, `api_key=`, `gho_`, `FINAL_CREDENTIALS` → only a historical
+  scan description in `plan/progress.md`; no secret values or locations.
+- Final `npm.cmd run verify` → typecheck clean; lint clean; `tests 33 / pass 33 /
+  fail 0`; `eval: 8 synthetic cases, 0 mismatches`;
+  `PASS events: 5 allowlisted names, 6 counts, 0 content fields`;
+  `engine bench: 2000 reviews, 10 runs, median 113.29 ms, 8.8 analyses/s, signals 3`;
+  build 3 static routes; `offline: scanned 18 source files, 4 HTML files,
+  0 external refs`; `build-variants: 2/2 verified`; 5/5 e2e checks; walkthrough
+  fixtures written.
+
+**Open items mapped:** M1-1, M1-2, M3-2 and push/publish confirmation only.
+No known agent-doable defect remains open.

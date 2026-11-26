@@ -35,11 +35,11 @@ function AnalysisSheet() {
           <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">illustrative mockup · synthetic</span>
         </div>
 
-        {/* score block */}
+        {/* illustrative figure block */}
         <div className="grid grid-cols-[auto_1fr] gap-5 border-b-2 border-ink px-5 py-5">
           <div className="flex flex-col items-center justify-center border-r-2 border-line pr-5">
             <span className="font-serif text-[76px] leading-[0.85]">38</span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted mt-1">illustrative score</span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted mt-1">illustrative figure</span>
           </div>
           <div className="flex flex-col justify-center">
             <p className="font-serif text-[22px] leading-tight">

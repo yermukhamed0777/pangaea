@@ -60,7 +60,7 @@ Measured now (commands and results are in `plan/progress.md`):
 | Local eval | 8 synthetic cases, 0 mismatches | `npm run eval` |
 | Event harness | 5 allowlisted names, 0 content fields | `npm run check:events` |
 | Browser e2e | 5 checks pass, 0 external requests | `npm run test:e2e` |
-| Benchmark (CI setting) | 114.57 ms median, 2,000 reviews, 10 runs | `npm run bench` |
+| Benchmark (CI setting) | 113.29 ms median, 2,000 reviews, 10 runs | `npm run bench` |
 | Offline | 18 source files, 4 HTML files, 0 external refs | `npm run check:offline` |
 | Build variants | 2/2 (`/` and `/pangaea`) | `npm run check:build-variants` |
 | Typecheck | clean | `npm run typecheck` |
@@ -71,9 +71,9 @@ Measured now (commands and results are in `plan/progress.md`):
 | Published site | HTTP 200 (as of 2026-11-25) | `Invoke-WebRequest` to Pages URL |
 
 Proposed targets (**not measured — decisions, not facts**): p95 under 2 s for 1,000
-reviews; at least 10 consenting user sessions before publishing any real number;
-zero third-party network requests in the browser build (enforceable by inspection and
-a future network-sniffing test).
+reviews; at least 10 consenting user sessions before publishing any real number.
+Zero third-party network requests is now enforced by `npm run check:offline` and
+the browser request assertion in `npm run test:e2e`, not merely proposed.
 
 ## Risks
 
@@ -82,24 +82,30 @@ a future network-sniffing test).
 2. **Performance (resolved 2026-11-26).** The O(n²) duplicate scan was replaced by
    grouped/prefix-filtered detection; 5,000 reviews now take 649.97 ms median. The
    new algorithm must stay exact — a regression test counts duplicate pairs.
-3. **Claim drift.** Marketing copy previously stated a "trust index", "Do not buy",
-   "5 marketplaces", price history and seller verification that the code does not do.
-4. **Privacy reversal.** Recovered work in a separate local copy includes Supabase
-   auth/saved reports. Merging it would break the zero-account promise unless it is
-   opt-in and clearly separated.
-5. **Legal.** Marketplace importers carry ToS/scraping risk; no permission has been sought.
+3. **Claim drift (mitigated 2026-11-26).** Old copy claimed a "trust index",
+   "Do not buy", "5 marketplaces", price history and seller verification. It was
+   reconciled; every remaining number is measured or labelled illustrative. Future
+   copy must keep that standard.
+4. **Privacy reversal (default recorded).** Recovered Supabase auth/saved reports
+   stay in a separate local copy. Merging would break the zero-account promise;
+   see `plan/cloud-boundary.md` for the opt-in boundary.
+5. **Legal (no-go recorded).** Marketplace importers carry ToS/scraping risk and
+   no permission has been sought; re-open only with written permission.
 6. **Licensing.** Source is public while the licence is proprietary; the footer used to
    say "open tools". This is now explicit in `LICENSE`, but user-facing copy must stay
    consistent.
-7. **Supply chain.** No lockfile existed in this working copy until 2026-11-25; CI now
-   uses `npm ci` and a generated `package-lock.json`.
+7. **Supply chain (mitigated).** No lockfile existed until 2026-11-25; CI now uses
+   `npm ci` and a generated `package-lock.json`. npm reports a non-fatal
+   `allow-scripts` notice for `sharp`; it is unused by the static export.
 
 ## Open questions
 
-- Will PANGAEA stay a free public prototype or become a paid product? (Affects licence,
-  hosting and whether auth/sync is ever built.)
-- Is the recovered Supabase work to be merged, kept separate, or discarded?
-- Which marketplaces, if any, have permitted data access?
+- Will PANGAEA stay a free public prototype or become a paid product? Agent default:
+  free prototype, no payments; a human owner of price/tax may supersede (M2-2).
+- Is the recovered Supabase work to be merged, kept separate, or discarded? Agent
+  default: kept separate, no merge (M1-4, `plan/cloud-boundary.md`).
+- Which marketplaces, if any, have permitted data access? None; importers are no-go
+  until written permission exists (M1-3).
 - What is the minimum sample size before any measured figure is published?
 - Who owns the trademark/brand and who signs off on public claims?
 
